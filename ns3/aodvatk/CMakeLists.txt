@@ -1,0 +1,25 @@
+build_lib(
+  LIBNAME aodvatk
+  SOURCE_FILES
+    helper/aodvatk-helper.cc
+    model/aodvatk-dpd.cc
+    model/aodvatk-id-cache.cc
+    model/aodvatk-neighbor.cc
+    model/aodvatk-packet.cc
+    model/aodvatk-routing-protocol.cc
+    model/aodvatk-rqueue.cc
+    model/aodvatk-rtable.cc
+  HEADER_FILES
+    helper/aodvatk-helper.h
+    model/aodvatk-dpd.h
+    model/aodvatk-id-cache.h
+    model/aodvatk-neighbor.h
+    model/aodvatk-packet.h
+    model/aodvatk-routing-protocol.h
+    model/aodvatk-rqueue.h
+    model/aodvatk-rtable.h
+  LIBRARIES_TO_LINK
+    ${libapplications}
+    ${libinternet-apps}
+    ${libwifi}
+)
