@@ -26,6 +26,7 @@ uint64_t CtrFwdDrop(uint32_t); uint64_t CtrRreqRecv(uint32_t);
 uint64_t CtrNoRoute(uint32_t);
 uint64_t CtrRrepSent(uint32_t);
 const std::vector<uint32_t>& NbAddresses(uint32_t);
+void SetWormHeardHook(void (*)(uint32_t, uint32_t));
 } }
 
 
@@ -52,6 +53,10 @@ struct Cfg {
   bool wormhole = false;
   uint32_t seed = 1;
   std::string outDir = "out";
+  // Robustness study options (defaults reproduce the published dataset).
+  double shadowSigma = 0.0;   // dB, zero-mean normal per-packet loss term
+  double rxLoss = 0.0;        // probability a correctly received frame is lost
+  bool wormTransparent = false; // relay wormhole: partner audible on air
 };
 static Cfg g;
 
@@ -173,6 +178,9 @@ int main(int argc, char* argv[]) {
   cmd.AddValue("dropProb", "drop probability for malicious nodes", g.dropProb);
   cmd.AddValue("seed", "rng seed", g.seed);
   cmd.AddValue("outDir", "output dir", g.outDir);
+  cmd.AddValue("shadowSigma", "shadowing std dev, dB", g.shadowSigma);
+  cmd.AddValue("rxLoss", "post-reception frame loss probability", g.rxLoss);
+  cmd.AddValue("wormTransparent", "partner audible through tunnel", g.wormTransparent);
   cmd.Parse(argc, argv);
   RngSeedManager::SetSeed(g.seed);
   RngSeedManager::SetRun(1);
@@ -190,6 +198,11 @@ int main(int argc, char* argv[]) {
   ch.AddPropagationLoss("ns3::LogDistancePropagationLossModel",
                         "Exponent", DoubleValue(g.plExp),
                         "ReferenceLoss", DoubleValue(g.refLoss));
+  if (g.shadowSigma > 0)
+    ch.AddPropagationLoss("ns3::RandomPropagationLossModel", "Variable",
+        StringValue("ns3::NormalRandomVariable[Mean=0|Variance=" +
+                    std::to_string(g.shadowSigma * g.shadowSigma) + "|Bound=" +
+                    std::to_string(4 * g.shadowSigma) + "]"));
   YansWifiPhyHelper phy;
   phy.SetChannel(ch.Create());
   phy.Set("TxPowerStart", DoubleValue(g.txPowerDbm));
@@ -197,6 +210,16 @@ int main(int argc, char* argv[]) {
   WifiMacHelper mac;
   mac.SetType("ns3::AdhocWifiMac");
   NetDeviceContainer devices = wifi.Install(phy, mac, nodes);
+  if (g.rxLoss > 0) {
+    for (uint32_t i = 0; i < devices.GetN(); ++i) {
+      Ptr<RateErrorModel> em = CreateObject<RateErrorModel>();
+      em->SetAttribute("ErrorUnit", StringValue("ERROR_UNIT_PACKET"));
+      em->SetAttribute("ErrorRate", DoubleValue(g.rxLoss));
+      DynamicCast<WifiNetDevice>(devices.Get(i))->GetPhy()->SetPostReceptionErrorModel(em);
+    }
+  }
+  if (g.wormTransparent)
+    aodvatk::SetWormHeardHook([](uint32_t me, uint32_t partner) { g_heard[me].insert(partner); });
   for (uint32_t i = 0; i < devices.GetN(); ++i) {
     Ptr<WifiNetDevice> wd = DynamicCast<WifiNetDevice>(devices.Get(i));
     if (wd) g_macToNode[Mac48Address::ConvertFrom(wd->GetAddress())] =

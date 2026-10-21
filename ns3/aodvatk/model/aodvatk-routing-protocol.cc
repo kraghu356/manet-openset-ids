@@ -58,6 +58,11 @@ struct NodeCounters {
 std::map<uint32_t, NodeCounters> g_ctr;
 class RoutingProtocol;
 std::map<int32_t, RoutingProtocol*> g_wormReg;
+// Robustness study: when set, a tunnel replay also makes the partner audible
+// at the receiving endpoint (MAC-transparent relay wormhole). Called with
+// (receiving endpoint id, partner id).
+void (*g_wormHeardHook)(uint32_t, uint32_t) = nullptr;
+void SetWormHeardHook(void (*f)(uint32_t, uint32_t)) { g_wormHeardHook = f; }
 NodeCounters& Ctr(uint32_t id) { return g_ctr[id]; }
 uint64_t CtrFwdSeen(uint32_t i) { return g_ctr[i].fwdSeen; }
 uint64_t CtrFwdOk(uint32_t i)   { return g_ctr[i].fwdOk; }
@@ -1147,6 +1152,8 @@ RoutingProtocol::WormReplay(Ptr<Packet> p, Ipv4Address receiver, Ipv4Address src
         Ipv4Address partner(("10.1.1." + std::to_string(m_wormPartner + 1)).c_str());
         m_nb.Update(partner, m_activeRouteTimeout);
     }
+    if (g_wormHeardHook && m_wormPartner >= 0)
+        g_wormHeardHook(m_ipv4->GetObject<Node>()->GetId(), (uint32_t)m_wormPartner);
     m_inWormReplay = true;
     RecvRequest(p, local, local);
     m_inWormReplay = false;
