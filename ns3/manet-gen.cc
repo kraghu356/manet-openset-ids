@@ -57,6 +57,9 @@ struct Cfg {
   double shadowSigma = 0.0;   // dB, zero-mean normal per-packet loss term
   double rxLoss = 0.0;        // probability a correctly received frame is lost
   bool wormTransparent = false; // relay wormhole: partner audible on air
+  double nakagamiM = 0.0;     // >0 adds Nakagami-m multipath fading (1 = Rayleigh)
+  double heardExpiry = 0.0;   // >0: a neighbour counts as heard only if heard
+                              // within this many seconds (bounded memory)
 };
 static Cfg g;
 
@@ -68,6 +71,7 @@ struct RssiStat { double sum=0, mn=1e9, mx=-1e9; uint64_t n=0; };
 static std::map<uint32_t, RssiStat> g_rssi;
 static std::map<Mac48Address, uint32_t> g_macToNode;
 static std::map<uint32_t, std::set<uint32_t>> g_heard;   // nodes heard on air
+static std::map<uint32_t, std::map<uint32_t, double>> g_heardAt; // last time heard
 static void SnifferRx(std::string ctx, Ptr<const Packet> p, uint16_t freq,
                       WifiTxVector tx, MpduInfo mpdu, SignalNoiseDbm sn,
                       uint16_t staId) {
@@ -81,7 +85,8 @@ static void SnifferRx(std::string ctx, Ptr<const Packet> p, uint16_t freq,
   Ptr<Packet> c=p->Copy();
   if (c->PeekHeader(hdr)) {
     auto it=g_macToNode.find(hdr.GetAddr2());
-    if (it!=g_macToNode.end()) g_heard[id].insert(it->second);
+    if (it!=g_macToNode.end()) { g_heard[id].insert(it->second);
+      g_heardAt[id][it->second] = Simulator::Now().GetSeconds(); }
   }
 }
 // Per-node RSSI statistics, gathered from the PHY monitor trace. A node can
@@ -126,8 +131,12 @@ static void EmitWindow(NodeContainer nodes, uint32_t nMal, double win) {
     double rssiDistMax = std::pow(10.0,
         (g.txPowerDbm - g.refLoss - rssiMin) / (10.0 * g.plExp));
     uint32_t noRssi = 0;
-    for (uint32_t nb : nbs)
-      if (g_heard[i].find(nb) == g_heard[i].end()) noRssi++;
+    for (uint32_t nb : nbs) {
+      if (g.heardExpiry > 0) {
+        auto h = g_heardAt[i].find(nb);
+        if (h == g_heardAt[i].end() || t - h->second > g.heardExpiry) noRssi++;
+      } else if (g_heard[i].find(nb) == g_heard[i].end()) noRssi++;
+    }
     static std::map<uint32_t, std::set<uint32_t>> prevNb;
     std::set<uint32_t> cur(nbs.begin(), nbs.end());
     uint32_t churn = 0;
@@ -181,6 +190,8 @@ int main(int argc, char* argv[]) {
   cmd.AddValue("shadowSigma", "shadowing std dev, dB", g.shadowSigma);
   cmd.AddValue("rxLoss", "post-reception frame loss probability", g.rxLoss);
   cmd.AddValue("wormTransparent", "partner audible through tunnel", g.wormTransparent);
+  cmd.AddValue("nakagamiM", "Nakagami m (0 = off, 1 = Rayleigh)", g.nakagamiM);
+  cmd.AddValue("heardExpiry", "heard-set memory, s (0 = whole run)", g.heardExpiry);
   cmd.Parse(argc, argv);
   RngSeedManager::SetSeed(g.seed);
   RngSeedManager::SetRun(1);
@@ -198,6 +209,10 @@ int main(int argc, char* argv[]) {
   ch.AddPropagationLoss("ns3::LogDistancePropagationLossModel",
                         "Exponent", DoubleValue(g.plExp),
                         "ReferenceLoss", DoubleValue(g.refLoss));
+  if (g.nakagamiM > 0)
+    ch.AddPropagationLoss("ns3::NakagamiPropagationLossModel",
+        "m0", DoubleValue(g.nakagamiM), "m1", DoubleValue(g.nakagamiM),
+        "m2", DoubleValue(g.nakagamiM));
   if (g.shadowSigma > 0)
     ch.AddPropagationLoss("ns3::RandomPropagationLossModel", "Variable",
         StringValue("ns3::NormalRandomVariable[Mean=0|Variance=" +
@@ -219,7 +234,8 @@ int main(int argc, char* argv[]) {
     }
   }
   if (g.wormTransparent)
-    aodvatk::SetWormHeardHook([](uint32_t me, uint32_t partner) { g_heard[me].insert(partner); });
+    aodvatk::SetWormHeardHook([](uint32_t me, uint32_t partner) { g_heard[me].insert(partner);
+        g_heardAt[me][partner] = Simulator::Now().GetSeconds(); });
   for (uint32_t i = 0; i < devices.GetN(); ++i) {
     Ptr<WifiNetDevice> wd = DynamicCast<WifiNetDevice>(devices.Get(i));
     if (wd) g_macToNode[Mac48Address::ConvertFrom(wd->GetAddress())] =

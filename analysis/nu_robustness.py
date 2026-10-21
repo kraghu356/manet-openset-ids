@@ -34,7 +34,10 @@ CONDITIONS = {
     "speed_10_20":       ["--minSpeed=10", "--maxSpeed=20"],
     "dense_1000m":       ["--areaX=1000", "--areaY=1000"],
     "large_200n":        ["--nNodes=200", "--areaX=2100", "--areaY=2100", "--nFlows=20"],
+    "rayleigh_fading":   ["--nakagamiM=1"],
     "hello_on":          ["--hello=1"],
+    "heard_memory_30s":  ["--heardExpiry=30"],
+    "heard_memory_10s":  ["--heardExpiry=10"],
     "relay_wormhole":    ["--wormTransparent=1"],
 }
 
