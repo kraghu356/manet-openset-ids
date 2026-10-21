@@ -49,7 +49,10 @@ def run_one(ns3, out, cond, seed):
         return d
     os.makedirs(d, exist_ok=True)
     exe = os.path.join(ns3, "build", "scratch", "ns3.48-manet-gen-optimized")
-    args = [exe] + BASE + CONDITIONS[cond] + [f"--seed={seed}", f"--outDir={d}"]
+    # The wormhole tunnel implementation iterates a pointer-ordered container,
+    # so results depend on heap layout. Address-space randomisation is turned
+    # off for each run, which makes every seed reproducible on a given build.
+    args = ["setarch", os.uname().machine, "-R", exe] + BASE + CONDITIONS[cond] + [f"--seed={seed}", f"--outDir={d}"]
     with open(os.path.join(d, "stdout.txt"), "w") as fo:
         subprocess.run(args, stdout=fo, stderr=subprocess.STDOUT, check=True,
                        env=dict(os.environ, LD_LIBRARY_PATH=os.path.join(ns3, "build", "lib")))
