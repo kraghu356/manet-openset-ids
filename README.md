@@ -10,8 +10,8 @@ Amruth V (ORCID 0009-0005-6346-0201) and Devaraj Verma C (ORCID
 0000-0002-1504-4263), Department of Computer Science and Engineering, JAIN
 (Deemed-to-be University), Bengaluru. Correspondence: amruthv020@gmail.com
 
-The version that produced every number in the submitted manuscript is the git
-tag `springer-submission-v1`.
+The version that produced every number in the submitted manuscript is commit
+`ec4f0aa` on branch `revision-openset-eval`.
 
 ## Contents
 
