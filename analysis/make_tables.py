@@ -29,7 +29,7 @@ rows = [("msp_cnn", "MSP, CNN"), ("msp_lstm", "MSP, LSTM"), ("msp_gru", "MSP, GR
         None, ("rf_vote", "Forest vote"), ("rf_entropy", "Forest vote entropy"), ("svm_margin", "SVM margin"),
         ("knn_dist", "$k$-NN distance"), ("autoencoder", "Reconstruction"), None, ("nu", "$\\nu$"),
         ("hybrid_rf_ae", "Vote + recon."), ("hybrid_rf_nu", "Vote + $\\nu$"), ("hybrid_ae_nu", "Recon. + $\\nu$"),
-        ("hybrid", "Hybrid, Eq.~(\\ref{eq:hybrid})")]
+        ("hybrid", "Hybrid, Eq.~(\\ref{eq:hybrid})"), ("knn_nu", "$k$-NN + $\\nu$, Eq.~(\\ref{eq:knnnu})")]
 best = {a: max(r["open_set"][a][m]["auroc"]["mean"] or 0 for m in r["open_set"][a]) for a in A}
 with open(os.path.join(OUT, "openset_auroc.tex"), "w") as f:
     for row in rows:
@@ -45,12 +45,12 @@ with open(os.path.join(OUT, "openset_auroc.tex"), "w") as f:
 
 # operating point
 op = [("msp_gru", "MSP, GRU"), ("energy_gru", "Energy, GRU"), ("openmax_gru", "OpenMax, GRU"), ("rf_vote", "Forest vote"),
-      ("knn_dist", "$k$-NN distance"), ("autoencoder", "Reconstruction"), ("nu", "$\\nu$"), ("hybrid", "Hybrid")]
+      ("knn_dist", "$k$-NN distance"), ("autoencoder", "Reconstruction"), ("nu", "$\\nu$"), ("hybrid", "Hybrid"), ("knn_nu", "$k$-NN + $\\nu$")]
 with open(os.path.join(OUT, "operating.tex"), "w") as f:
     for k, lab in op:
         c = [f"{r['open_set'][a][k]['tpr_at_val95']['mean']:.2f}/{r['open_set'][a][k]['fpr_at_val95']['mean']:.2f}" for a in A]
-        kf = [r["open_set"][a][k]["known_attacks_flagged"]["mean"] for a in A]
-        f.write(f"{lab} & " + " & ".join(c) + f" & {np.mean(kf):.2f} \\\\\n")
+        dr = [r["open_set"][a][k]["tpr_at_val95"]["mean"] for a in A]
+        f.write(f"{lab} & " + " & ".join(c) + f" & {np.mean(dr):.2f} \\\\\n")
 
 # autoencoder ablation
 ab = r["autoencoder_ablation"]

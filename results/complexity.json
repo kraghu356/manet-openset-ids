@@ -3,48 +3,48 @@
  "n_features": 15,
  "seq_len": 29,
  "decision_tree": {
-  "train_s": 0.048439780000080646,
+  "train_s": 0.024224156000855146,
   "size_kb": 6.533203125,
-  "latency_ms": 0.19018660000256205
+  "latency_ms": 0.07881577999796718
  },
  "random_forest": {
-  "train_s": 1.3637832149997848,
+  "train_s": 1.5860421699999279,
   "size_kb": 2022.2802734375,
-  "latency_ms": 35.4706377850016
+  "latency_ms": 45.680387974998666
  },
  "knn": {
-  "train_s": 0.00949738800045452,
+  "train_s": 0.006892368999615428,
   "size_kb": 1131.8525390625,
-  "latency_ms": 0.7613494850011193
+  "latency_ms": 0.9022077800000261
  },
  "svm": {
-  "train_s": 0.14310878700052854,
+  "train_s": 0.21682774100008828,
   "size_kb": 88.75390625,
-  "latency_ms": 0.40853914999843255
+  "latency_ms": 0.4320242700032395
  },
  "cnn": {
   "params": 17541,
   "size_kb": 68.51953125,
-  "latency_ms": 0.15916385000309674
+  "latency_ms": 0.1231336800083227
  },
  "lstm": {
   "params": 56261,
   "size_kb": 219.76953125,
-  "latency_ms": 0.5077631199992538
+  "latency_ms": 0.713255125001524
  },
  "gru": {
   "params": 42757,
   "size_kb": 167.01953125,
-  "latency_ms": 1.1036990050024542
+  "latency_ms": 1.7765193450031802
  },
  "autoencoder": {
   "params": 11535,
   "size_kb": 45.05859375,
-  "latency_ms": 1.133069975003309
+  "latency_ms": 1.4145974999973987
  },
  "nu": {
   "size_kb": 0.390625,
-  "latency_ms": 0.0007320150007217308,
+  "latency_ms": 0.0007383299998764414,
   "note": "state is the heard-node set, at most one id per node in the network"
  }
 }

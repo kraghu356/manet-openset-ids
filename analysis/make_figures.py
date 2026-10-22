@@ -54,11 +54,12 @@ def fig_protocol():
 def fig_auroc(r):
     rows = [("msp_gru", "Softmax confidence"), ("energy_gru", "Energy score"), ("openmax_gru", "OpenMax"),
             ("rf_vote", "Forest vote disagreement"), ("svm_margin", "SVM margin"), ("knn_dist", "k-NN distance"),
-            ("autoencoder", "Reconstruction error"), ("nu", "Unheard neighbours ν"), ("hybrid", "Hybrid (Eq. 9)")]
+            ("autoencoder", "Reconstruction error"), ("nu", "Unheard neighbours ν"), ("hybrid", "Hybrid (Eq. 9)"),
+            ("knn_nu", "k-NN + ν (Eq. 10)")]
     M = np.array([[r["open_set"][a][m]["auroc"]["mean"] if r["open_set"][a][m]["auroc"]["mean"] is not None
                    else np.nan for a in ATT] for m, _ in rows])
     cmap = LinearSegmentedColormap.from_list("div", ["#a32a2a", "#e34948", "#f0efec", "#2a78d6", "#104281"])
-    fig, ax = plt.subplots(figsize=(3.4, 2.9))
+    fig, ax = plt.subplots(figsize=(3.4, 3.15))
     show = np.where(np.isnan(M), 0.5, M)
     ax.imshow(show, cmap=cmap, vmin=0, vmax=1, aspect="auto")
     for i in range(M.shape[0]):
