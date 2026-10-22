@@ -11,7 +11,8 @@ Amruth V (ORCID 0009-0005-6346-0201) and Devaraj Verma C (ORCID
 (Deemed-to-be University), Bengaluru. Correspondence: amruthv020@gmail.com
 
 The version that produced every number in the submitted manuscript is commit
-`ec4f0aa` on branch `revision-openset-eval`.
+`7b7a41c` on branch `revision-openset-eval` (the four-fold results were first
+fixed at `ec4f0aa`; later commits add the frozen-detector evaluation).
 
 ## Contents
 
