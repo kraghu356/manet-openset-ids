@@ -25,12 +25,26 @@ The version that produced every number in the submitted manuscript is commit
 | `analysis/build_dataset3.py` | Builds dataset3 from dataset2 and regenerated wormhole runs |
 | `analysis/openset_eval.py` | Closed-set and leave-one-attack-out evaluation; writes `results/openset_results.json` |
 | `analysis/extra_metrics.py` | PR-AUC, run-clustered bootstrap intervals, no-speed ablation; writes `results/extra_metrics.json` |
+| `results/independent_runs.csv.gz` | Independent test campaign: 42 runs (24 at the paper's settings, seeds 101-104; 18 with 2 dB shadowing and speeds 2-8 m/s, seeds 201-203), 121,800 rows; never used to choose any method or threshold |
+| `analysis/independent_campaign.py` | Regenerates the independent campaign |
+| `analysis/fixed_detector_eval.py` | Frozen detectors (fitted once on seeds 1-16) on the independent campaign and the stress runs, and operating points at four thresholds; writes `results/fixed_detector.json` |
+| `analysis/make_fixed_tables.py` | Tables 9-11 from `results/fixed_detector.json` |
 | `analysis/complexity.py` | Model size and per-node latency; writes `results/complexity.json` |
 | `analysis/nu_robustness.py`, `analysis/nu_robustness_report.py` | Stress test of the unheard-neighbour count; writes `results/nu_robustness.csv` |
 | `analysis/make_tables.py`, `analysis/make_figures.py` | Every table body and figure in the paper, from the result files only |
 
 Row count: 120 runs x 100 nodes x 29 windows = 348,000; the recorded output of
-black hole seed 17 ends after 28 windows, giving 347,900.
+black hole seed 17 ends after 28 windows, giving 347,900 (58,000 rows per
+scenario, 57,900 for the black hole). Every other run has 29 windows. The
+wormhole run of seed 17 had been cut short by an interrupted simulation and was
+regenerated with the same seed and build (commit bedce0f) before any reported
+result was computed; this is the "seed 17 regenerated" of the commit history.
+All tables and figures use this one snapshot, `dataset3.csv.gz`, with the
+checksum below.
+
+A fresh clone of this branch, run with `analysis/extra_metrics.py`, reproduces
+`results/extra_metrics.json` exactly (largest difference 0 in every AUROC,
+average precision and bootstrap bound).
 
 ### dataset2 versus dataset3
 
@@ -48,7 +62,8 @@ generator.
 |---|---|---|
 | Table 3, Table 4, Table 5, Table 6 | `analysis/make_tables.py` | `results/openset_results.json` |
 | Table 7, Table 8 (fold-level, PR-AUC, onboard-only, bootstrap) | `analysis/make_tables.py` | `results/extra_metrics.json` |
-| Table 9 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
+| Table 9 (operating points), Table 10 (full-detector stress), Table 11 (independent campaign) | `analysis/make_fixed_tables.py` | `results/fixed_detector.json` |
+| Table 12 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
 | Fig. 1 | `analysis/make_figures.py` | fold definition in `analysis/openset_eval.py` |
 | Fig. 2, Fig. 3 | `analysis/make_figures.py` | `results/openset_results.json` |
 | Fig. 4 | `analysis/make_figures.py` | `results/nu_robustness.csv` |
@@ -86,6 +101,9 @@ g++ 13.3.0 and CMake 3.28.3 on Linux.
        python3 analysis/nu_robustness.py --ns3 ~/ns-3.48 --out runs_nu --seeds 5
        python3 analysis/nu_robustness.py --ns3 ~/ns-3.48 --out runs_nu_fix --seeds 3
        python3 analysis/nu_robustness_report.py --fixed runs_nu_fix --honest runs_nu
+       python3 analysis/independent_campaign.py --ns3 ~/ns-3.48 --out runs_indep
+       python3 analysis/fixed_detector_eval.py --indep runs_indep --stress-fix runs_nu_fix --stress-honest runs_nu
+       python3 analysis/make_fixed_tables.py
 
    Regenerated runs reproduce the statistics of the released dataset; the
    original dataset2 runs predate the address-randomisation fix and cannot be
@@ -100,3 +118,4 @@ Attack flags: `--nMalicious`, `--dropProb`, `--forge`, `--floodRate`,
 
     results/dataset2.csv.gz  3f6038ba518a1fa581401ec36b8bd0fdefab74aa7d3e3a0dd9e05aa16a342a9e
     results/dataset3.csv.gz  78e3f767d3e6da19858e4b4c386f2b00c8dee62e9e1b058ce69a66eb44f3975a
+    results/independent_runs.csv.gz  5e8c3235be74f79e29d999bfb64e29ecfaffe3191d8601cf8341532271f5b54d
