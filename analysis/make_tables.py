@@ -17,6 +17,7 @@ def ms(d, bold=False):
 names = [("random_forest", "Random forest, 300 trees"), ("gru", "Gated recurrent unit"), ("knn", "$k$-nearest neighbours, $k=5$"),
          ("lstm", "Long short-term memory \\ct{r:venkat}"), ("cnn", "Convolutional network \\ct{r:abdan}"),
          ("svm", "Support vector machine"), ("decision_tree", "Decision tree")]
+names = sorted(names, key=lambda kl: -r["closed_set"][kl[0]]["mean"])
 with open(os.path.join(OUT, "closed.tex"), "w") as f:
     for k, lab in names:
         d = r["closed_set"][k]
