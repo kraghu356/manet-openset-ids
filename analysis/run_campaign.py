@@ -49,12 +49,14 @@ if __name__ == "__main__":
     ap.add_argument("--seeds", type=int, default=20)
     ap.add_argument("--jobs", type=int, default=2)
     ap.add_argument("--pdr", action="store_true", help="print delivery ratio and hops per scenario")
+    ap.add_argument("--scenarios", default=",".join(SCEN))
     a = ap.parse_args()
-    jobs = list(itertools.product(SCEN, range(1, a.seeds + 1)))
+    scen = a.scenarios.split(",")
+    jobs = list(itertools.product(scen, range(1, a.seeds + 1)))
     with ThreadPoolExecutor(a.jobs) as ex:
         res = list(ex.map(lambda j: run(a.ns3, a.out, *j), jobs))
     if a.pdr:
         import statistics as st
-        for sc in SCEN:
+        for sc in scen:
             p = [r[2] for r in res if r[0] == sc]; h = [r[3] for r in res if r[0] == sc]
             print(f"{sc:7s} PDR {st.mean(p):.3f} +- {st.pstdev(p):.3f}  hops {st.mean(h):.2f}")

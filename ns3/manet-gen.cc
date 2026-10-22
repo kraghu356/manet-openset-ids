@@ -132,6 +132,10 @@ static void EmitWindow(NodeContainer nodes, uint32_t nMal, double win) {
         (g.txPowerDbm - g.refLoss - rssiMin) / (10.0 * g.plExp));
     uint32_t noRssi = 0;
     for (uint32_t nb : nbs) {
+      // A node never hears itself. The tunnel replay registers the endpoint's
+      // own address in its neighbour table, so it is excluded here; otherwise
+      // nu would count an artefact of the implementation, not the tunnel.
+      if (nb == i) continue;
       if (g.heardExpiry > 0) {
         auto h = g_heardAt[i].find(nb);
         if (h == g_heardAt[i].end() || t - h->second > g.heardExpiry) noRssi++;
