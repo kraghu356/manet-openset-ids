@@ -51,7 +51,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, "..", "results", "dataset2.csv.gz")
+DATA = os.path.join(HERE, "..", "results", "dataset3.csv.gz")
 SEQ = 29
 ATTACKS = ["bha", "flood", "gha", "sink", "worm"]
 
@@ -90,6 +90,7 @@ def load():
 def node_table(df, feats):
     """Sequences for every node that was asked to forward at least once."""
     X, M, cls, nu, scen = [], [], [], [], []
+    nu2 = []
     for _, q in df.groupby(["run", "node_id"], sort=False):
         if q.fwd_seen.sum() == 0:
             continue
@@ -101,6 +102,9 @@ def node_table(df, feats):
         X.append(p); M.append(m)
         cls.append(q.cls.iloc[0]); scen.append(q.scenario.iloc[0])
         nu.append(float(q.nb_no_rssi.max()))
+        h = (q.nb_no_rssi.to_numpy() > 0)
+        nu2.append(float((h[1:] & h[:-1]).any()))
+    node_table.nu2 = np.array(nu2)
     return (np.stack(X), np.stack(M), np.array(cls), np.array(nu), np.array(scen))
 
 
@@ -346,7 +350,7 @@ def run(quick=False):
     methods = ["msp_cnn", "msp_lstm", "msp_gru", "energy_cnn", "energy_lstm", "energy_gru",
                "openmax_cnn", "openmax_lstm", "openmax_gru", "rf_vote", "rf_entropy",
                "knn_dist", "svm_margin", "autoencoder", "nu",
-               "hybrid_rf_ae", "hybrid_rf_nu", "hybrid_ae_nu", "hybrid"]
+               "hybrid_rf_ae", "hybrid_rf_nu", "hybrid_ae_nu", "hybrid", "knn_nu", "knn_nu2w"]
     store = {h: {m: {"auroc": [], "tpr_at_val95": [], "fpr_at_val95": [],
                      "known_attacks_flagged": []} for m in methods} for h in ATTACKS}
     loao_assign = {h: [] for h in ATTACKS}
@@ -362,6 +366,7 @@ def run(quick=False):
         T.setdefault("autoencoder_train_s", []).append(time.time() - t0)
 
         Xte_raw, Mte, cte, nute, scte = node_table(a[a.seed.isin(tes)], feats)
+        nu2te = node_table.nu2
         ae_te = recon(ae, fa(Xte_raw), Mte)
 
         for h in ATTACKS:
@@ -371,6 +376,7 @@ def run(quick=False):
             va_df = a[a.seed.isin(vas) & (a.scenario != h)]
             Xtr, Mtr, ctr, _, _ = node_table(tr_df, feats)
             Xva, Mva, cva, nuva, _ = node_table(va_df, feats)
+            nu2va = node_table.nu2
             ytr = np.array([ki[c] for c in ctr]); yva = np.array([ki[c] for c in cva])
             sc = StandardScaler().fit(Xtr.reshape(-1, len(feats)))
             f = lambda X: sc.transform(X.reshape(-1, len(feats))).reshape(X.shape).astype(np.float32)
@@ -428,6 +434,12 @@ def run(quick=False):
             S_te["hybrid_rf_ae"], S_va["hybrid_rf_ae"] = np.maximum(r_rf_te, r_ae_te), np.maximum(r_rf_va, r_ae_va)
             S_te["hybrid_rf_nu"], S_va["hybrid_rf_nu"] = np.maximum(r_rf_te, ov_te), np.maximum(r_rf_va, ov_va)
             S_te["hybrid_ae_nu"], S_va["hybrid_ae_nu"] = np.maximum(r_ae_te, ov_te), np.maximum(r_ae_va, ov_va)
+            # distance score with the protocol check: nu > 0 ranks above every score
+            r_kn_te = rank_against(S_va["knn_dist"][vneg], S_te["knn_dist"])
+            r_kn_va = rank_against(S_va["knn_dist"][vneg], S_va["knn_dist"])
+            S_te["knn_nu"], S_va["knn_nu"] = np.maximum(r_kn_te, ov_te), np.maximum(r_kn_va, ov_va)
+            ov2_te, ov2_va = (nu2te > 0) * (1.0 + nu2te), (nu2va > 0) * (1.0 + nu2va)
+            S_te["knn_nu2w"], S_va["knn_nu2w"] = np.maximum(r_kn_te, ov2_te), np.maximum(r_kn_va, ov2_va)
             S_te["hybrid"] = np.maximum(np.maximum(r_rf_te, r_ae_te), ov_te)
             S_va["hybrid"] = np.maximum(np.maximum(r_rf_va, r_ae_va), ov_va)
 
