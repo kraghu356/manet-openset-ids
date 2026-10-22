@@ -307,6 +307,19 @@ def auroc(pos, neg):
 # main loop
 # --------------------------------------------------------------------------
 
+PARTS = os.path.join(HERE, "..", "results", "parts")
+
+
+def ck_load(name):
+    f = os.path.join(PARTS, name + ".json")
+    return json.load(open(f)) if os.path.exists(f) else None
+
+
+def ck_save(name, obj):
+    os.makedirs(PARTS, exist_ok=True)
+    json.dump(obj, open(os.path.join(PARTS, name + ".json"), "w"))
+
+
 def run(quick=False):
     a = load()
     folds = FOLDS[:1] if quick else FOLDS
@@ -324,6 +337,11 @@ def run(quick=False):
     cl = sorted(a.cls.unique()); ci = {c: i for i, c in enumerate(cl)}
     closed = {}
     for fi, (trs, vas, tes) in enumerate(folds):
+        got = None if quick else ck_load(f"closed_f{fi}")
+        if got is not None:
+            for k, v in got.items(): closed.setdefault(k, []).append(v)
+            print(f"  fold {fi + 1} (saved): " + " ".join(f"{k}={v:.3f}" for k, v in got.items()), flush=True)
+            continue
         Xtr, Mtr, ctr, _, _ = node_table(a[a.seed.isin(trs)], feats)
         Xva, Mva, cva, _, _ = node_table(a[a.seed.isin(vas)], feats)
         Xte, Mte, cte, _, _ = node_table(a[a.seed.isin(tes)], feats)
@@ -343,6 +361,7 @@ def run(quick=False):
             lg, _ = logits_and_features(m, Xte, Mte)
             closed.setdefault(nm, []).append(f1_score(yte, lg.argmax(1), average="macro"))
         print(f"  fold {fi + 1}: " + " ".join(f"{k}={v[-1]:.3f}" for k, v in closed.items()), flush=True)
+        if not quick: ck_save(f"closed_f{fi}", {k: v[-1] for k, v in closed.items()})
     res["closed_set"] = {k: {"mean": float(np.mean(v)), "sd": float(np.std(v)),
                              "folds": [round(x, 4) for x in v]} for k, v in closed.items()}
 
@@ -356,6 +375,16 @@ def run(quick=False):
     loao_assign = {h: [] for h in ATTACKS}
 
     for fi, (trs, vas, tes) in enumerate(folds):
+        got = None if quick else ck_load(f"open_f{fi}")
+        if got is not None:
+            for h in ATTACKS:
+                for mth in methods:
+                    for k in store[h][mth]: store[h][mth][k].append(got["store"][h][mth][k])
+                loao_assign[h].append(got["assign"][h])
+            for k, v in got["T"].items(): T.setdefault(k, []).extend(v)
+            print(f"open set, fold {fi + 1} (saved)", flush=True)
+            continue
+        T_f = {k: len(v) for k, v in T.items()}
         print(f"open set, fold {fi + 1}", flush=True)
         # autoencoder: benign nodes of benign runs, train seeds; independent of h
         t0 = time.time()
@@ -456,6 +485,11 @@ def run(quick=False):
                             else f"{k}=undef" for k in ["msp_gru", "energy_gru", "openmax_gru", "rf_vote", "autoencoder", "nu", "hybrid"])
             print(f"  {h}: n_pos={int(pos.sum())} {line}", flush=True)
 
+        if not quick:
+            ck_save(f"open_f{fi}", {"store": {h: {m: {k: store[h][m][k][-1] for k in store[h][m]} for m in methods} for h in ATTACKS},
+                                     "assign": {h: loao_assign[h][-1] for h in ATTACKS},
+                                     "T": {k: v[T_f.get(k, 0):] for k, v in T.items()}})
+
     def summ(v):
         v = [x for x in v if x is not None]
         return {"mean": float(np.mean(v)) if v else None, "sd": float(np.std(v)) if v else None,
@@ -469,16 +503,20 @@ def run(quick=False):
     print("autoencoder ablation", flush=True)
     for nm, FF in [("F_all", F_ALL), ("F_observable", F_OBS), ("F_observable_minus_nu", F_OBS_NO_NU)]:
         per = {c: [] for c in ATTACKS}
-        for trs, vas, tes in folds:
+        for fi, (trs, vas, tes) in enumerate(folds):
+            got = None if quick else ck_load(f"ablation_{nm}_f{fi}")
+            if got is not None:
+                for c, v in got.items(): per[c].append(v)
+                continue
             Xn, Mn, _, _, _ = node_table(a[a.seed.isin(trs) & (a.cls == "normal") & (a.scenario == "normal")], FF)
             s2 = StandardScaler().fit(Xn.reshape(-1, len(FF)))
             g = lambda X: s2.transform(X.reshape(-1, len(FF))).reshape(X.shape).astype(np.float32)
             m = train_ae(g(Xn), Mn, ep_ae)
             Xt, Mt, ct, _, _ = node_table(a[a.seed.isin(tes)], FF)
             e = recon(m, g(Xt), Mt)
-            for c in ATTACKS:
-                if (ct == c).any():
-                    per[c].append(auroc(e[ct == c], e[ct == "normal"]))
+            one = {c: auroc(e[ct == c], e[ct == "normal"]) for c in ATTACKS if (ct == c).any()}
+            for c, v in one.items(): per[c].append(v)
+            if not quick: ck_save(f"ablation_{nm}_f{fi}", one)
         res["autoencoder_ablation"][nm] = {c: summ(v) for c, v in per.items()}
         print(f"  {nm}: " + " ".join(f"{c}={np.mean(v):.3f}" for c, v in per.items() if v), flush=True)
 
