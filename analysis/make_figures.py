@@ -110,22 +110,22 @@ def fig_robustness():
     d = pd.read_csv(f).set_index("condition")
     d = d.loc[[c for c in COND_LBL if c in d.index]]
     y = np.arange(len(d))[::-1]
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.8, 2.9), sharey=True, gridspec_kw=dict(wspace=0.08))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.8, 3.1), sharey=True, gridspec_kw=dict(wspace=0.08))
     h = 0.38
-    a1.barh(y + h / 2, d.tpr_node, h, color="#2a78d6", label="Flag at first window")
-    a1.barh(y - h / 2, d.tpr_node_2w, h, color="#eb6834", hatch="////", edgecolor="white", lw=0.3,
+    a1.barh(y + h / 2, 100 * d.tpr_node, h, color="#2a78d6", label="Endpoint flagged in any window")
+    a1.barh(y - h / 2, 100 * d.tpr_win, h, color="#1baf7a", hatch="....", edgecolor="white", lw=0.3,
+            label="Share of endpoint windows flagged")
+    a1.set_xlim(0, 105); a1.set_xlabel("Wormhole endpoints (%)", fontsize=7)
+    a2.barh(y + h / 2, 100 * d.fpr_node, h, color="#2a78d6", label="Alarm at first window")
+    a2.barh(y - h / 2, 100 * d.fpr_node_2w, h, color="#eb6834", hatch="////", edgecolor="white", lw=0.3,
             label="Two consecutive windows")
-    a1.set_xlim(0, 1.05); a1.set_xlabel("Wormhole endpoints detected", fontsize=7)
-    a2.barh(y + h / 2, 100 * d.fpr_node, h, color="#2a78d6")
-    a2.barh(y - h / 2, 100 * d.fpr_node_2w, h, color="#eb6834", hatch="////", edgecolor="white", lw=0.3)
     a2.set_xlabel("Honest nodes flagged (%)", fontsize=7)
-    for a in (a1, a2):
-        a.spines[["top", "right"]].set_visible(False); a.xaxis.grid(True, color=GRID, lw=0.4); a.set_axisbelow(True)
-        a.tick_params(labelsize=6.5)
+    for ax in (a1, a2):
+        ax.spines[["top", "right"]].set_visible(False); ax.xaxis.grid(True, color=GRID, lw=0.4)
+        ax.set_axisbelow(True); ax.tick_params(labelsize=6.5)
+        ax.legend(fontsize=5.8, frameon=False, loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=1)
     a1.set_yticks(y); a1.set_yticklabels([COND_LBL[c] for c in d.index], fontsize=6.8)
-    a1.legend(fontsize=6, frameon=False, loc="upper center", bbox_to_anchor=(1.05, 1.13), ncol=2)
     save(fig, "fig_robustness")
-
 
 if __name__ == "__main__":
     r = json.load(open(os.path.join(R, "openset_results.json")))
