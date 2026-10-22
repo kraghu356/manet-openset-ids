@@ -64,6 +64,7 @@ def summarise(out, seeds):
     rows = []
     for cond in CONDITIONS:
         tn = fn = tw = fw = 0; Tn = Fn = Tw = Fw = 0; tdet = []
+        tn2 = fn2 = 0; tdet2 = []
         n_runs = 0
         for s in seeds:
             f = os.path.join(out, cond, f"s{s}", "features.csv")
@@ -74,6 +75,8 @@ def summarise(out, seeds):
             for nid, g in df.groupby("node_id"):
                 mal = g.is_malicious.iloc[0] == 1
                 hit = g.nb_no_rssi > 0
+                # two-window rule: nu > 0 in two consecutive windows
+                hit2 = hit & hit.shift(1, fill_value=False)
                 # windows after the node first took part in routing
                 act = g[(g.rreq_recv.cumsum() > 0)]
                 hw = (act.nb_no_rssi > 0)
@@ -82,8 +85,11 @@ def summarise(out, seeds):
                     Tw += len(act); tw += int(hw.sum())
                     if hit.any():
                         tdet.append(float(g.time_s[hit].iloc[0]))
+                    tn2 += int(hit2.any())
+                    if hit2.any():
+                        tdet2.append(float(g.time_s[hit2].iloc[0]))
                 else:
-                    Fn += 1; fn += int(hit.any())
+                    Fn += 1; fn += int(hit.any()); fn2 += int(hit2.any())
                     Fw += len(act); fw += int(hw.sum())
         if n_runs == 0:
             continue
@@ -93,7 +99,10 @@ def summarise(out, seeds):
                          fpr_node=fn / Fn if Fn else np.nan,
                          tpr_win=tw / Tw if Tw else np.nan,
                          fpr_win=fw / Fw if Fw else np.nan,
-                         t_detect_median=float(np.median(tdet)) if tdet else np.nan))
+                         t_detect_median=float(np.median(tdet)) if tdet else np.nan,
+                         tpr_node_2w=tn2 / Tn if Tn else np.nan,
+                         fpr_node_2w=fn2 / Fn if Fn else np.nan,
+                         t_detect_2w_median=float(np.median(tdet2)) if tdet2 else np.nan))
     return pd.DataFrame(rows)
 
 
