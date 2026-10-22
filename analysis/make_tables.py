@@ -76,3 +76,26 @@ with open(os.path.join(OUT, "complexity.tex"), "w") as f:
         lt = f"{d['latency_ms']:.4f}" if d["latency_ms"] < 0.01 else f"{d['latency_ms']:.2f}"
         f.write(f"{lab} & {p} & {d['size_kb']:.1f} & {ts} & {lt} \\\\\n")
 print("tables written to", os.path.abspath(OUT))
+
+# supplementary: fold-level AUROC, PR-AUC, onboard-only ablation, bootstrap intervals
+xp = os.path.join(R, "extra_metrics.json")
+if os.path.exists(xp):
+    x = json.load(open(xp))
+    o, nb = x["F_observable"], x["F_onboard_no_speed"]
+    rows8 = [("rf_vote", "Forest vote"), ("knn_dist", "$k$-NN distance"), ("autoencoder", "Reconstruction"),
+             ("nu", "$\\nu$"), ("hybrid", "Hybrid, Eq.~(\\ref{eq:hybrid})"), ("knn_nu", "$k$-NN + $\\nu$, Eq.~(\\ref{eq:knnnu})")]
+    with open(os.path.join(OUT, "uncertainty.tex"), "w") as f:
+        for k, lab in rows8:
+            folds = [np.mean([o["auroc"][a][k][i] for a in A]) for i in range(4)]
+            apm = np.mean([np.mean(o["ap"][a][k]) for a in A])
+            nbm = np.mean([np.mean(nb["auroc"][a][k]) for a in A])
+            f.write(f"{lab} & " + " & ".join(f"{v:.3f}" for v in folds) + f" & {np.mean(folds):.3f} & {apm:.3f} & {nbm:.3f} \\\\\n")
+    with open(os.path.join(OUT, "bootstrap.tex"), "w") as f:
+        lbl2 = {"bha": "Black hole", "flood": "Flooding", "gha": "Grey hole", "sink": "Sinkhole", "worm": "Wormhole"}
+        for a in A:
+            cells = []
+            for k in ["knn_dist", "knn_nu", "hybrid"]:
+                lo, hi = o["boot"][a][k]; m = np.mean(o["auroc"][a][k])
+                cells.append(f"{m:.3f} [{lo:.3f}, {hi:.3f}]")
+            f.write(f"{lbl2[a]} & " + " & ".join(cells) + " \\\\\n")
+    print("supplementary tables written")
