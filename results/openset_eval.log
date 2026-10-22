@@ -1,34 +1,34 @@
 closed set
-  fold 1: decision_tree=0.927 knn=0.995 svm=0.959 random_forest=0.977 cnn=0.910 lstm=0.987 gru=0.909
+  fold 1: decision_tree=0.931 knn=0.995 svm=0.959 random_forest=0.977 cnn=0.916 lstm=0.987 gru=0.909
   fold 2: decision_tree=0.924 knn=0.900 svm=0.933 random_forest=0.961 cnn=0.952 lstm=0.924 gru=0.937
-  fold 3: decision_tree=0.937 knn=0.962 svm=0.982 random_forest=0.974 cnn=0.959 lstm=0.974 gru=0.991
-  fold 4: decision_tree=0.944 knn=0.977 svm=0.883 random_forest=0.985 cnn=0.972 lstm=0.975 gru=0.942
+  fold 3: decision_tree=0.948 knn=0.962 svm=0.982 random_forest=0.974 cnn=0.983 lstm=0.978 gru=0.983
+  fold 4: decision_tree=0.939 knn=0.977 svm=0.885 random_forest=0.985 cnn=0.966 lstm=0.967 gru=0.946
 open set, fold 1
-  bha: n_pos=20 msp_gru=0.026 energy_gru=0.129 openmax_gru=0.601 rf_vote=0.964 autoencoder=0.590 nu=undef hybrid=0.938
-  flood: n_pos=19 msp_gru=0.182 energy_gru=0.420 openmax_gru=0.173 rf_vote=0.677 autoencoder=0.985 nu=undef hybrid=0.968
-  gha: n_pos=19 msp_gru=0.031 energy_gru=0.100 openmax_gru=0.673 rf_vote=0.973 autoencoder=0.433 nu=undef hybrid=0.959
-  sink: n_pos=20 msp_gru=0.144 energy_gru=0.385 openmax_gru=0.195 rf_vote=0.882 autoencoder=0.994 nu=undef hybrid=0.983
-  worm: n_pos=7 msp_gru=0.342 energy_gru=0.307 openmax_gru=0.344 rf_vote=0.664 autoencoder=0.607 nu=1.000 hybrid=1.000
+  bha: n_pos=20 msp_gru=0.026 energy_gru=0.129 openmax_gru=0.602 rf_vote=0.964 autoencoder=0.602 nu=undef hybrid=0.939
+  flood: n_pos=19 msp_gru=0.183 energy_gru=0.422 openmax_gru=0.174 rf_vote=0.676 autoencoder=0.985 nu=undef hybrid=0.968
+  gha: n_pos=19 msp_gru=0.031 energy_gru=0.100 openmax_gru=0.673 rf_vote=0.973 autoencoder=0.443 nu=undef hybrid=0.959
+  sink: n_pos=20 msp_gru=0.146 energy_gru=0.387 openmax_gru=0.197 rf_vote=0.881 autoencoder=0.994 nu=undef hybrid=0.983
+  worm: n_pos=7 msp_gru=0.336 energy_gru=0.301 openmax_gru=0.338 rf_vote=0.691 autoencoder=0.539 nu=1.000 hybrid=1.000
 open set, fold 2
-  bha: n_pos=20 msp_gru=0.100 energy_gru=0.289 openmax_gru=0.848 rf_vote=0.981 autoencoder=0.691 nu=undef hybrid=0.968
+  bha: n_pos=20 msp_gru=0.100 energy_gru=0.289 openmax_gru=0.848 rf_vote=0.981 autoencoder=0.691 nu=undef hybrid=0.967
   flood: n_pos=19 msp_gru=0.755 energy_gru=0.749 openmax_gru=0.747 rf_vote=0.715 autoencoder=0.993 nu=undef hybrid=0.988
-  gha: n_pos=16 msp_gru=0.757 energy_gru=0.913 openmax_gru=0.901 rf_vote=0.910 autoencoder=0.292 nu=undef hybrid=0.897
+  gha: n_pos=16 msp_gru=0.757 energy_gru=0.913 openmax_gru=0.901 rf_vote=0.910 autoencoder=0.292 nu=undef hybrid=0.896
   sink: n_pos=20 msp_gru=0.675 energy_gru=0.661 openmax_gru=0.689 rf_vote=0.802 autoencoder=0.991 nu=undef hybrid=0.983
   worm: n_pos=8 msp_gru=0.554 energy_gru=0.515 openmax_gru=0.573 rf_vote=0.358 autoencoder=0.502 nu=0.875 hybrid=0.827
 open set, fold 3
-  bha: n_pos=19 msp_gru=0.095 energy_gru=0.165 openmax_gru=0.895 rf_vote=0.989 autoencoder=0.658 nu=undef hybrid=0.968
-  flood: n_pos=20 msp_gru=0.051 energy_gru=0.185 openmax_gru=0.030 rf_vote=0.640 autoencoder=0.982 nu=undef hybrid=0.977
-  gha: n_pos=19 msp_gru=0.537 energy_gru=0.926 openmax_gru=0.961 rf_vote=0.989 autoencoder=0.311 nu=undef hybrid=0.983
-  sink: n_pos=20 msp_gru=0.396 energy_gru=0.489 openmax_gru=0.307 rf_vote=0.601 autoencoder=0.997 nu=undef hybrid=0.995
+  bha: n_pos=19 msp_gru=0.096 energy_gru=0.416 openmax_gru=0.825 rf_vote=0.987 autoencoder=0.658 nu=undef hybrid=0.967
+  flood: n_pos=20 msp_gru=0.018 energy_gru=0.054 openmax_gru=0.012 rf_vote=0.789 autoencoder=0.982 nu=undef hybrid=0.976
+  gha: n_pos=19 msp_gru=0.516 energy_gru=0.946 openmax_gru=0.991 rf_vote=0.990 autoencoder=0.311 nu=undef hybrid=0.984
+  sink: n_pos=20 msp_gru=0.637 energy_gru=0.739 openmax_gru=0.583 rf_vote=0.710 autoencoder=0.997 nu=undef hybrid=0.995
   worm: n_pos=8 msp_gru=0.555 energy_gru=0.481 openmax_gru=0.517 rf_vote=0.481 autoencoder=0.327 nu=1.000 hybrid=1.000
 open set, fold 4
-  bha: n_pos=18 msp_gru=0.000 energy_gru=0.048 openmax_gru=0.709 rf_vote=0.982 autoencoder=0.503 nu=undef hybrid=0.975
-  flood: n_pos=20 msp_gru=0.202 energy_gru=0.149 openmax_gru=0.196 rf_vote=0.572 autoencoder=0.999 nu=undef hybrid=0.983
-  gha: n_pos=19 msp_gru=0.376 energy_gru=0.490 openmax_gru=0.949 rf_vote=0.994 autoencoder=0.334 nu=undef hybrid=0.994
-  sink: n_pos=20 msp_gru=0.094 energy_gru=0.461 openmax_gru=0.076 rf_vote=0.776 autoencoder=0.997 nu=undef hybrid=0.994
+  bha: n_pos=18 msp_gru=0.000 energy_gru=0.000 openmax_gru=0.240 rf_vote=0.982 autoencoder=0.503 nu=undef hybrid=0.978
+  flood: n_pos=20 msp_gru=0.131 energy_gru=0.204 openmax_gru=0.128 rf_vote=0.467 autoencoder=0.999 nu=undef hybrid=0.982
+  gha: n_pos=19 msp_gru=0.369 energy_gru=0.631 openmax_gru=0.957 rf_vote=0.995 autoencoder=0.334 nu=undef hybrid=0.995
+  sink: n_pos=20 msp_gru=0.081 energy_gru=0.533 openmax_gru=0.082 rf_vote=0.683 autoencoder=0.997 nu=undef hybrid=0.993
   worm: n_pos=8 msp_gru=0.396 energy_gru=0.344 openmax_gru=0.369 rf_vote=0.456 autoencoder=0.546 nu=1.000 hybrid=1.000
 autoencoder ablation
-  F_all: bha=0.742 flood=0.988 gha=0.347 sink=0.994 worm=0.949
-  F_observable: bha=0.610 flood=0.990 gha=0.343 sink=0.995 worm=0.495
-  F_observable_minus_nu: bha=0.566 flood=0.989 gha=0.336 sink=0.994 worm=0.427
+  F_all: bha=0.748 flood=0.988 gha=0.351 sink=0.994 worm=0.949
+  F_observable: bha=0.613 flood=0.990 gha=0.345 sink=0.995 worm=0.478
+  F_observable_minus_nu: bha=0.570 flood=0.989 gha=0.339 sink=0.994 worm=0.400
 written /home/claude/rev2/repo/results/openset_results.json

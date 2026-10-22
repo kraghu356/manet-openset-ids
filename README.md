@@ -47,8 +47,8 @@ generator.
 | Paper item | Produced by | From |
 |---|---|---|
 | Table 3, Table 4, Table 5, Table 6 | `analysis/make_tables.py` | `results/openset_results.json` |
-| Table 7 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
-| Table 8 (fold-level and bootstrap) | `analysis/make_tables.py` | `results/extra_metrics.json`, `results/openset_results.json` |
+| Table 7, Table 8 (fold-level, PR-AUC, onboard-only, bootstrap) | `analysis/make_tables.py` | `results/extra_metrics.json` |
+| Table 9 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
 | Fig. 1 | `analysis/make_figures.py` | fold definition in `analysis/openset_eval.py` |
 | Fig. 2, Fig. 3 | `analysis/make_figures.py` | `results/openset_results.json` |
 | Fig. 4 | `analysis/make_figures.py` | `results/nu_robustness.csv` |
