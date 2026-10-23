@@ -33,3 +33,6 @@ w = d3[d3.scenario == "worm"]
 print("rows", len(d3), "worm rows", len(w))
 print("endpoint nu max per node:", w[w.is_malicious == 1].groupby(["seed", "node_id"]).nb_no_rssi.max().value_counts().to_dict())
 print("honest nu max:", int(d3[d3.is_malicious == 0].nb_no_rssi.max()))
+# every routing neighbour of an honest node is learned from a decoded frame
+assert d3[d3.is_malicious == 0].nb_no_rssi.max() == 0, "an honest node has nu > 0"
+assert d3[(d3.is_malicious == 1) & (d3.scenario != "worm")].nb_no_rssi.max() == 0

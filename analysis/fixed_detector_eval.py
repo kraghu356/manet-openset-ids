@@ -106,6 +106,15 @@ def fit_ae(a, trs):
     return E.train_ae(sca.transform(Xn.reshape(-1, len(FEATS))).reshape(Xn.shape).astype(np.float32), Mn, 40), sca
 
 
+def wilson(k, n, z=1.96):
+    """Wilson 95% interval for a proportion k/n (nodes treated as independent)."""
+    if n == 0:
+        return None
+    ph = k / n; den = 1 + z * z / n
+    c = (ph + z * z / (2 * n)) / den; h = z * np.sqrt(ph * (1 - ph) / n + z * z / (4 * n * n)) / den
+    return [float(max(0.0, c - h)), float(min(1.0, c + h))]
+
+
 def metrics(det, S, pos, neg, runs):
     out = {}
     for m in METHODS:
@@ -119,6 +128,7 @@ def metrics(det, S, pos, neg, runs):
             t = np.percentile(det.val[m], q)
             tp, fp = int((p > t).sum()), int((n > t).sum())
             d[f"p{q}"] = {"tpr": tp / max(len(p), 1), "fpr": fp / max(len(n), 1),
+                          "tpr_ci": wilson(tp, len(p)), "fpr_ci": wilson(fp, len(n)),
                           "precision": tp / (tp + fp) if tp + fp else None,
                           "false_alerts_per_run": fp / max(nruns, 1)}
         out[m] = d
@@ -165,11 +175,16 @@ def main():
         dfx = read_runs(fx, lambda n: "worm", lambda n: 1000 + int(n[1:]), lab)
         dhn = read_runs(hn, lambda n: "worm", lambda n: 2000 + int(n[1:]), lab)
         Sx, cx, rx = det.score(dfx); Sh, ch, rh = det.score(dhn)
-        S = {m: np.r_[Sx[m][cx == "worm"], Sh[m][ch == "normal"]] for m in METHODS}
-        pos = np.r_[np.ones((cx == "worm").sum(), bool), np.zeros((ch == "normal").sum(), bool)]
-        runs = np.r_[rx[cx == "worm"], rh[ch == "normal"]]
+        # honest nodes of corrected-generator runs whose seed is not in the
+        # honest campaign are added (honest rows are identical across builds)
+        hseeds = {os.path.basename(q) for q in hn}
+        extra = np.array([os.path.basename(r) not in hseeds for r in rx])
+        hx = (cx == "normal") & extra
+        S = {m: np.r_[Sx[m][cx == "worm"], Sh[m][ch == "normal"], Sx[m][hx]] for m in METHODS}
+        pos = np.r_[np.ones((cx == "worm").sum(), bool), np.zeros((ch == "normal").sum() + hx.sum(), bool)]
+        runs = np.r_[rx[cx == "worm"], rh[ch == "normal"], rx[hx]]
         res["stress"][cond] = metrics(det, S, pos, ~pos, runs)
-        res["stress"][cond]["runs"] = {"endpoint_runs": len(fx), "honest_runs": len(hn)}
+        res["stress"][cond]["runs"] = {"endpoint_runs": len(fx), "honest_runs": len(hseeds | {os.path.basename(q) for q in fx})}
         print("stress", cond, {m: (round(res["stress"][cond][m]["auroc"] or 0, 3),
                                    round(res["stress"][cond][m]["p95"]["fpr"], 3)) for m in METHODS}, flush=True)
 
