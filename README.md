@@ -29,7 +29,7 @@ previous versions; the paper uses `dataset3` only.
 | `analysis/build_dataset3.py` | Builds dataset3 from dataset2 and regenerated wormhole runs |
 | `analysis/openset_eval.py` | Closed-set and leave-one-attack-out evaluation; writes `results/openset_results.json` |
 | `analysis/extra_metrics.py` | PR-AUC, run-clustered bootstrap intervals, no-speed ablation; writes `results/extra_metrics.json` |
-| `results/independent_runs.csv.gz` | Independent test campaign: 42 runs (24 at the paper's settings, seeds 101-104; 18 with 2 dB shadowing and speeds 2-8 m/s, seeds 201-203), 121,800 rows (127,600 with the calibration runs), never used to choose any method or threshold; plus 2 normal calibration runs in the shifted environment (condition `shift_cal`, seeds 204-205, 5,800 rows) used only by `analysis/recalibration.py` |
+| `results/independent_runs.csv.gz` | Independent test campaign: 42 runs (24 at the paper's settings, seeds 101-104; 18 with 2 dB shadowing and speeds 2-8 m/s, seeds 201-203), 121,800 rows (139,200 with the calibration runs), never used to choose any method or threshold; plus 6 normal calibration runs in the shifted environment (condition `shift_cal`, seeds 204-209, 17,400 rows) used only by `analysis/recalibration.py` |
 | `analysis/independent_campaign.py` | Regenerates the independent campaign |
 | `analysis/fixed_detector_eval.py` | Frozen detectors (fitted once on seeds 1-16) on the independent campaign and the stress runs, and operating points at four thresholds; writes `results/fixed_detector.json` |
 | `analysis/make_fixed_tables.py` | Tables 9-13 and 15 from `results/fixed_detector.json`, `results/recalibration.json`, `results/knn_ablation.json` |
