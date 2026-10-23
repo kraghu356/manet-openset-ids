@@ -1,0 +1,43 @@
+{
+ "wormhole_auroc_total_residual": 0.4784966957989796,
+ "wormhole_auroc_nu_residual_only": 0.9516980593607306,
+ "wormhole_auroc_nu_weighted": 0.876804839632009,
+ "per_feature": {
+  "fwd_seen": 0.5524621802989668,
+  "fwd_ratio": 0.5316120878413289,
+  "rreq_recv": 0.3528813332488395,
+  "rreq_sent": 0.5189073544378486,
+  "no_route": 0.440862795443661,
+  "nb_count": 0.5452520524575419,
+  "nb_churn": 0.5329964918568619,
+  "rssi_min": 0.5515227069413344,
+  "rssi_dist_max": 0.5945680430849027,
+  "nb_no_rssi": 0.9516980593607306,
+  "speed": 0.4612623239253964,
+  "fwd_ratio_ewma": 0.443211071046674,
+  "no_route_ewma": 0.42427638024140285,
+  "rreq_sent_ewma": 0.5176540279458031,
+  "nb_churn_ewma": 0.5190103270055648
+ },
+ "folds": {
+  "total": [
+   0.539296960349592,
+   0.5021118721461187,
+   0.3267058291911432,
+   0.5458721215090643
+  ],
+  "nu_only": [
+   1.0,
+   0.8067922374429224,
+   1.0,
+   1.0
+  ],
+  "nu_weighted": [
+   0.8843262001156738,
+   0.7991438356164384,
+   0.9330094893809308,
+   0.8907398334149927
+  ]
+ },
+ "scaler_note": "StandardScaler on benign training nodes; a zero-variance feature keeps scale 1 and mean 0, so nu enters unscaled"
+}
