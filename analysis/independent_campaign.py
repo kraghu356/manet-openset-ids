@@ -6,6 +6,8 @@ combination. Two conditions:
   same_env   the paper's settings, fresh seeds 101-104 (6 scenarios x 4 seeds)
   shift_env  2 dB log-normal shadowing and node speeds 2-8 m/s, seeds 201-203
              (6 scenarios x 3 seeds)
+  shift_cal  two further normal runs (seeds 204-205) in the shifted environment,
+             used only to recalibrate thresholds (analysis/recalibration.py)
 
 Runs are resumable: a run with a .done marker is skipped.
 
@@ -19,7 +21,9 @@ from run_campaign import BASE, SCEN
 CONDITIONS = {
     "same_env": ([], list(range(101, 105))),
     "shift_env": (["--shadowSigma=2", "--minSpeed=2", "--maxSpeed=8"], list(range(201, 204))),
+    "shift_cal": (["--shadowSigma=2", "--minSpeed=2", "--maxSpeed=8"], [204, 205]),
 }
+SCEN_OF = {"shift_cal": ["normal"]}
 
 
 def run(ns3, out, cond, sc, seed):
@@ -45,6 +49,6 @@ if __name__ == "__main__":
     ap.add_argument("--jobs", type=int, default=2)
     ap.add_argument("--only", default=",".join(CONDITIONS))
     a = ap.parse_args()
-    jobs = [(c, sc, s) for c in a.only.split(",") for sc, s in itertools.product(SCEN, CONDITIONS[c][1])]
+    jobs = [(c, sc, s) for c in a.only.split(",") for sc, s in itertools.product(SCEN_OF.get(c, SCEN), CONDITIONS[c][1])]
     with ThreadPoolExecutor(a.jobs) as ex:
         list(ex.map(lambda j: run(a.ns3, a.out, *j), jobs))
