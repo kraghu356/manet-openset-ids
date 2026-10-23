@@ -1,0 +1,646 @@
+{
+ "p95": {
+  "bha": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.053531264057579846,
+     "gate_false_alarm_normal": 0.03643724696356275,
+     "known_attack_alarm": 0.9846153846153847,
+     "known_attack_flagged_unknown": 0.8307692307692308,
+     "known_macro_f1_classifier": 0.9721022237906525,
+     "known_macro_f1_with_gate": 0.33408135528935806,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 43.00000000000004
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.049315068493150684,
+     "gate_false_alarm_normal": 0.043835616438356165,
+     "known_attack_alarm": 0.9365079365079365,
+     "known_attack_flagged_unknown": 0.873015873015873,
+     "known_macro_f1_classifier": 0.9527389827959952,
+     "known_macro_f1_with_gate": 0.26490103828682676,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 82.00000000000003
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.08133755083596927,
+     "gate_false_alarm_normal": 0.08043380027112516,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.9104477611940298,
+     "known_macro_f1_classifier": 0.9899096249435155,
+     "known_macro_f1_with_gate": 0.2906672047350013,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 30.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.059284664380205784,
+     "gate_false_alarm_normal": 0.05585497305242528,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8656716417910447,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.31839196329254726,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 33.00000000000001
+    }
+   ],
+   "mean": {
+    "unknown_detection": 1.0,
+    "any_alarm_unseen": 1.0,
+    "false_alarm_normal": 0.060867136941726394,
+    "gate_false_alarm_normal": 0.054140409181367345,
+    "known_attack_alarm": 0.9802808302808304,
+    "known_attack_flagged_unknown": 0.8699761266925446,
+    "known_macro_f1_classifier": 0.9740478374689192,
+    "known_macro_f1_with_gate": 0.30201039040093336,
+    "latency_s_median_unseen": 10.0,
+    "latency_s_p90_unseen": 47.000000000000014
+   }
+  },
+  "flood": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.14799820062977959,
+     "gate_false_alarm_normal": 0.13540260908681961,
+     "known_attack_alarm": 0.9848484848484849,
+     "known_attack_flagged_unknown": 0.8333333333333334,
+     "known_macro_f1_classifier": 0.9644470001916812,
+     "known_macro_f1_with_gate": 0.34026213075670253,
+     "latency_s_median_unseen": 50.0,
+     "latency_s_p90_unseen": 60.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.12100456621004566,
+     "gate_false_alarm_normal": 0.11598173515981736,
+     "known_attack_alarm": 0.9375,
+     "known_attack_flagged_unknown": 0.75,
+     "known_macro_f1_classifier": 0.9527389827959952,
+     "known_macro_f1_with_gate": 0.3836799663122434,
+     "latency_s_median_unseen": 30.0,
+     "latency_s_p90_unseen": 30.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.192950745594216,
+     "gate_false_alarm_normal": 0.19249887031179394,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8939393939393939,
+     "known_macro_f1_classifier": 0.9688569933645683,
+     "known_macro_f1_with_gate": 0.2947,
+     "latency_s_median_unseen": 30.0,
+     "latency_s_p90_unseen": 31.000000000000014
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.1474767270945615,
+     "gate_false_alarm_normal": 0.14551690347868693,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8461538461538461,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.3339305330697947,
+     "latency_s_median_unseen": 40.0,
+     "latency_s_p90_unseen": 40.0
+    }
+   ],
+   "mean": {
+    "unknown_detection": 1.0,
+    "any_alarm_unseen": 1.0,
+    "false_alarm_normal": 0.1523575598821507,
+    "gate_false_alarm_normal": 0.14735002950927947,
+    "known_attack_alarm": 0.9805871212121212,
+    "known_attack_flagged_unknown": 0.8308566433566434,
+    "known_macro_f1_classifier": 0.9668708736744396,
+    "known_macro_f1_with_gate": 0.33814315753468516,
+    "latency_s_median_unseen": 37.5,
+    "latency_s_p90_unseen": 40.25
+   }
+  },
+  "gha": {
+   "folds": [
+    {
+     "unknown_detection": 0.9473684210526315,
+     "any_alarm_unseen": 0.9473684210526315,
+     "false_alarm_normal": 0.05982905982905983,
+     "gate_false_alarm_normal": 0.04228520017993702,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8181818181818182,
+     "known_macro_f1_classifier": 0.9775526032675323,
+     "known_macro_f1_with_gate": 0.37637852938783256,
+     "latency_s_median_unseen": 20.0,
+     "latency_s_p90_unseen": 86.00000000000001
+    },
+    {
+     "unknown_detection": 0.75,
+     "any_alarm_unseen": 0.875,
+     "false_alarm_normal": 0.046118721461187215,
+     "gate_false_alarm_normal": 0.03881278538812785,
+     "known_attack_alarm": 0.9701492537313433,
+     "known_attack_flagged_unknown": 0.8507462686567164,
+     "known_macro_f1_classifier": 0.9661634737610096,
+     "known_macro_f1_with_gate": 0.3321825473114036,
+     "latency_s_median_unseen": 70.0,
+     "latency_s_p90_unseen": 154.00000000000003
+    },
+    {
+     "unknown_detection": 0.9473684210526315,
+     "any_alarm_unseen": 0.9473684210526315,
+     "false_alarm_normal": 0.0727519204699503,
+     "gate_false_alarm_normal": 0.07094441934026209,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.9402985074626866,
+     "known_macro_f1_classifier": 0.98445906263164,
+     "known_macro_f1_with_gate": 0.2680559028696766,
+     "latency_s_median_unseen": 45.0,
+     "latency_s_p90_unseen": 90.0
+    },
+    {
+     "unknown_detection": 0.9473684210526315,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.04654581087702107,
+     "gate_false_alarm_normal": 0.04311611954924057,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8636363636363636,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.3309317359497893,
+     "latency_s_median_unseen": 40.0,
+     "latency_s_p90_unseen": 182.0
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.8980263157894736,
+    "any_alarm_unseen": 0.9424342105263157,
+    "false_alarm_normal": 0.0563113781593046,
+    "gate_false_alarm_normal": 0.048789631114391885,
+    "known_attack_alarm": 0.9925373134328358,
+    "known_attack_flagged_unknown": 0.8682157394843962,
+    "known_macro_f1_classifier": 0.9774039145014239,
+    "known_macro_f1_with_gate": 0.32688717887967556,
+    "latency_s_median_unseen": 43.75,
+    "latency_s_p90_unseen": 128.0
+   }
+  },
+  "sink": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.07782276203328835,
+     "gate_false_alarm_normal": 0.07782276203328835,
+     "known_attack_alarm": 0.9846153846153847,
+     "known_attack_flagged_unknown": 0.6,
+     "known_macro_f1_classifier": 0.9945496204547251,
+     "known_macro_f1_with_gate": 0.5493506219945152,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 20.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.058447488584474884,
+     "gate_false_alarm_normal": 0.058447488584474884,
+     "known_attack_alarm": 0.9365079365079365,
+     "known_attack_flagged_unknown": 0.5079365079365079,
+     "known_macro_f1_classifier": 0.9579127563434133,
+     "known_macro_f1_with_gate": 0.578265331788252,
+     "latency_s_median_unseen": 20.0,
+     "latency_s_p90_unseen": 150.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.09986443741527339,
+     "gate_false_alarm_normal": 0.09986443741527339,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8333333333333334,
+     "known_macro_f1_classifier": 0.9789473684210526,
+     "known_macro_f1_with_gate": 0.376397794832991,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.082312591866732,
+     "gate_false_alarm_normal": 0.082312591866732,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.676923076923077,
+     "known_macro_f1_classifier": 0.9866176830761695,
+     "known_macro_f1_with_gate": 0.4923678127357228,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 23.000000000000043
+    }
+   ],
+   "mean": {
+    "unknown_detection": 1.0,
+    "any_alarm_unseen": 1.0,
+    "false_alarm_normal": 0.07961181997494216,
+    "gate_false_alarm_normal": 0.07961181997494216,
+    "known_attack_alarm": 0.9802808302808304,
+    "known_attack_flagged_unknown": 0.6545482295482297,
+    "known_macro_f1_classifier": 0.9795068570738401,
+    "known_macro_f1_with_gate": 0.49909539033787026,
+    "latency_s_median_unseen": 12.5,
+    "latency_s_p90_unseen": 50.750000000000014
+   }
+  },
+  "worm": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.053531264057579846,
+     "gate_false_alarm_normal": 0.04048582995951417,
+     "known_attack_alarm": 0.9871794871794872,
+     "known_attack_flagged_unknown": 0.7564102564102564,
+     "known_macro_f1_classifier": 0.976187703264003,
+     "known_macro_f1_with_gate": 0.4741606804847912,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 0.75,
+     "any_alarm_unseen": 0.75,
+     "false_alarm_normal": 0.041552511415525115,
+     "gate_false_alarm_normal": 0.03561643835616438,
+     "known_attack_alarm": 0.9733333333333334,
+     "known_attack_flagged_unknown": 0.72,
+     "known_macro_f1_classifier": 0.981401568999105,
+     "known_macro_f1_with_gate": 0.49547737490197485,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.0736556710347944,
+     "gate_false_alarm_normal": 0.07184816990510619,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.8205128205128205,
+     "known_macro_f1_classifier": 0.9688569933645681,
+     "known_macro_f1_with_gate": 0.42102268570513235,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.03968642822146007,
+     "gate_false_alarm_normal": 0.036256736893679566,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.7402597402597403,
+     "known_macro_f1_classifier": 0.9948228112812977,
+     "known_macro_f1_with_gate": 0.47831239776086926,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.9375,
+    "any_alarm_unseen": 0.9375,
+    "false_alarm_normal": 0.052106468682339854,
+    "gate_false_alarm_normal": 0.046051793778616075,
+    "known_attack_alarm": 0.9901282051282052,
+    "known_attack_flagged_unknown": 0.7592957042957043,
+    "known_macro_f1_classifier": 0.9803172692272435,
+    "known_macro_f1_with_gate": 0.46724328471319193,
+    "latency_s_median_unseen": 10.0,
+    "latency_s_p90_unseen": 10.0
+   }
+  }
+ },
+ "p99": {
+  "bha": {
+   "folds": [
+    {
+     "unknown_detection": 0.85,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.02834008097165992,
+     "gate_false_alarm_normal": 0.006297795771479982,
+     "known_attack_alarm": 0.9846153846153847,
+     "known_attack_flagged_unknown": 0.1076923076923077,
+     "known_macro_f1_classifier": 0.9721022237906525,
+     "known_macro_f1_with_gate": 0.7714690300056154,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 71.00000000000001
+    },
+    {
+     "unknown_detection": 0.9,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.01598173515981735,
+     "gate_false_alarm_normal": 0.007762557077625571,
+     "known_attack_alarm": 0.9365079365079365,
+     "known_attack_flagged_unknown": 0.1111111111111111,
+     "known_macro_f1_classifier": 0.9527389827959952,
+     "known_macro_f1_with_gate": 0.7731748136920551,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 106.00000000000009
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.02394938996836873,
+     "gate_false_alarm_normal": 0.023045639403524627,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.582089552238806,
+     "known_macro_f1_classifier": 0.9899096249435155,
+     "known_macro_f1_with_gate": 0.5453914138882561,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 30.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.006369426751592357,
+     "gate_false_alarm_normal": 0.002449779519843214,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.1791044776119403,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.7720365651745843,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 33.00000000000001
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.9375,
+    "any_alarm_unseen": 1.0,
+    "false_alarm_normal": 0.01866015821285959,
+    "gate_false_alarm_normal": 0.009888942943118349,
+    "known_attack_alarm": 0.9802808302808304,
+    "known_attack_flagged_unknown": 0.24499936216354126,
+    "known_macro_f1_classifier": 0.9740478374689192,
+    "known_macro_f1_with_gate": 0.7155179556901278,
+    "latency_s_median_unseen": 10.0,
+    "latency_s_p90_unseen": 60.00000000000003
+   }
+  },
+  "flood": {
+   "folds": [
+    {
+     "unknown_detection": 0.9473684210526315,
+     "any_alarm_unseen": 0.9473684210526315,
+     "false_alarm_normal": 0.03148897885739991,
+     "gate_false_alarm_normal": 0.00449842555105713,
+     "known_attack_alarm": 0.9848484848484849,
+     "known_attack_flagged_unknown": 0.10606060606060606,
+     "known_macro_f1_classifier": 0.9644470001916812,
+     "known_macro_f1_with_gate": 0.7639947194685199,
+     "latency_s_median_unseen": 280.0,
+     "latency_s_p90_unseen": 290.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.014611872146118721,
+     "gate_false_alarm_normal": 0.006392694063926941,
+     "known_attack_alarm": 0.9375,
+     "known_attack_flagged_unknown": 0.109375,
+     "known_macro_f1_classifier": 0.9527389827959952,
+     "known_macro_f1_with_gate": 0.7755408901325167,
+     "latency_s_median_unseen": 110.0,
+     "latency_s_p90_unseen": 110.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.03886127428829643,
+     "gate_false_alarm_normal": 0.037957523723452326,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.4696969696969697,
+     "known_macro_f1_classifier": 0.9688569933645683,
+     "known_macro_f1_with_gate": 0.6158352487900289,
+     "latency_s_median_unseen": 60.0,
+     "latency_s_p90_unseen": 70.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.029887310142087214,
+     "gate_false_alarm_normal": 0.027437530622243998,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.6153846153846154,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.5098675212159196,
+     "latency_s_median_unseen": 60.0,
+     "latency_s_p90_unseen": 81.00000000000001
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.9868421052631579,
+    "any_alarm_unseen": 0.9868421052631579,
+    "false_alarm_normal": 0.02871235885847557,
+    "gate_false_alarm_normal": 0.0190715434901701,
+    "known_attack_alarm": 0.9805871212121212,
+    "known_attack_flagged_unknown": 0.3251292977855478,
+    "known_macro_f1_classifier": 0.9668708736744396,
+    "known_macro_f1_with_gate": 0.6663095949017462,
+    "latency_s_median_unseen": 127.5,
+    "latency_s_p90_unseen": 137.75
+   }
+  },
+  "gha": {
+   "folds": [
+    {
+     "unknown_detection": 0.10526315789473684,
+     "any_alarm_unseen": 0.9473684210526315,
+     "false_alarm_normal": 0.03013945119208277,
+     "gate_false_alarm_normal": 0.006297795771479982,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.10606060606060606,
+     "known_macro_f1_classifier": 0.9775526032675323,
+     "known_macro_f1_with_gate": 0.7769194086790654,
+     "latency_s_median_unseen": 20.0,
+     "latency_s_p90_unseen": 86.00000000000001
+    },
+    {
+     "unknown_detection": 0.625,
+     "any_alarm_unseen": 0.875,
+     "false_alarm_normal": 0.01643835616438356,
+     "gate_false_alarm_normal": 0.006392694063926941,
+     "known_attack_alarm": 0.9701492537313433,
+     "known_attack_flagged_unknown": 0.1044776119402985,
+     "known_macro_f1_classifier": 0.9661634737610096,
+     "known_macro_f1_with_gate": 0.7889653796268583,
+     "latency_s_median_unseen": 70.0,
+     "latency_s_p90_unseen": 154.00000000000003
+    },
+    {
+     "unknown_detection": 0.8947368421052632,
+     "any_alarm_unseen": 0.9473684210526315,
+     "false_alarm_normal": 0.03027564392227745,
+     "gate_false_alarm_normal": 0.028016267510167194,
+     "known_attack_alarm": 0.9850746268656716,
+     "known_attack_flagged_unknown": 0.43283582089552236,
+     "known_macro_f1_classifier": 0.98445906263164,
+     "known_macro_f1_with_gate": 0.6446945565395619,
+     "latency_s_median_unseen": 45.0,
+     "latency_s_p90_unseen": 90.0
+    },
+    {
+     "unknown_detection": 0.8947368421052632,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.005879470847623714,
+     "gate_false_alarm_normal": 0.0019598236158745713,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.5,
+     "known_macro_f1_classifier": 0.9814405183455135,
+     "known_macro_f1_with_gate": 0.5883068670973592,
+     "latency_s_median_unseen": 40.0,
+     "latency_s_p90_unseen": 182.0
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.6299342105263158,
+    "any_alarm_unseen": 0.9424342105263157,
+    "false_alarm_normal": 0.020683230531591875,
+    "gate_false_alarm_normal": 0.010666645240362174,
+    "known_attack_alarm": 0.9888059701492538,
+    "known_attack_flagged_unknown": 0.2858435097241067,
+    "known_macro_f1_classifier": 0.9774039145014239,
+    "known_macro_f1_with_gate": 0.6997215529857113,
+    "latency_s_median_unseen": 43.75,
+    "latency_s_p90_unseen": 128.0
+   }
+  },
+  "sink": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.009896536212325686,
+     "gate_false_alarm_normal": 0.008547008547008548,
+     "known_attack_alarm": 0.9846153846153847,
+     "known_attack_flagged_unknown": 0.1076923076923077,
+     "known_macro_f1_classifier": 0.9945496204547251,
+     "known_macro_f1_with_gate": 0.7936912522278375,
+     "latency_s_median_unseen": 80.0,
+     "latency_s_p90_unseen": 231.0
+    },
+    {
+     "unknown_detection": 0.75,
+     "any_alarm_unseen": 0.75,
+     "false_alarm_normal": 0.0091324200913242,
+     "gate_false_alarm_normal": 0.007762557077625571,
+     "known_attack_alarm": 0.9365079365079365,
+     "known_attack_flagged_unknown": 0.09523809523809523,
+     "known_macro_f1_classifier": 0.9579127563434133,
+     "known_macro_f1_with_gate": 0.7857049080222884,
+     "latency_s_median_unseen": 50.0,
+     "latency_s_p90_unseen": 224.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.03434252146407592,
+     "gate_false_alarm_normal": 0.033438770899231814,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.24242424242424243,
+     "known_macro_f1_classifier": 0.9789473684210526,
+     "known_macro_f1_with_gate": 0.725254843361461,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 80.00000000000014
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.011268985791278784,
+     "gate_false_alarm_normal": 0.010779029887310143,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.4,
+     "known_macro_f1_classifier": 0.9866176830761695,
+     "known_macro_f1_with_gate": 0.6398197970611764,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 93.00000000000004
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.9375,
+    "any_alarm_unseen": 0.9375,
+    "false_alarm_normal": 0.016160115889751147,
+    "gate_false_alarm_normal": 0.01513184160279402,
+    "known_attack_alarm": 0.9802808302808304,
+    "known_attack_flagged_unknown": 0.21133866133866136,
+    "known_macro_f1_classifier": 0.9795068570738401,
+    "known_macro_f1_with_gate": 0.7361177001681909,
+    "latency_s_median_unseen": 37.5,
+    "latency_s_p90_unseen": 157.00000000000003
+   }
+  },
+  "worm": {
+   "folds": [
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.025191183085919926,
+     "gate_false_alarm_normal": 0.006297795771479982,
+     "known_attack_alarm": 0.9871794871794872,
+     "known_attack_flagged_unknown": 0.0,
+     "known_macro_f1_classifier": 0.976187703264003,
+     "known_macro_f1_with_gate": 0.9755547949271136,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 0.75,
+     "any_alarm_unseen": 0.75,
+     "false_alarm_normal": 0.014611872146118721,
+     "gate_false_alarm_normal": 0.006392694063926941,
+     "known_attack_alarm": 0.9733333333333334,
+     "known_attack_flagged_unknown": 0.013333333333333334,
+     "known_macro_f1_classifier": 0.981401568999105,
+     "known_macro_f1_with_gate": 0.975632046293525,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.02937189335743335,
+     "gate_false_alarm_normal": 0.027564392227745142,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.32051282051282054,
+     "known_macro_f1_classifier": 0.9688569933645681,
+     "known_macro_f1_with_gate": 0.8050585793853395,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    },
+    {
+     "unknown_detection": 1.0,
+     "any_alarm_unseen": 1.0,
+     "false_alarm_normal": 0.005389514943655071,
+     "gate_false_alarm_normal": 0.0014698677119059284,
+     "known_attack_alarm": 1.0,
+     "known_attack_flagged_unknown": 0.2727272727272727,
+     "known_macro_f1_classifier": 0.9948228112812977,
+     "known_macro_f1_with_gate": 0.8184852402499463,
+     "latency_s_median_unseen": 10.0,
+     "latency_s_p90_unseen": 10.0
+    }
+   ],
+   "mean": {
+    "unknown_detection": 0.9375,
+    "any_alarm_unseen": 0.9375,
+    "false_alarm_normal": 0.018641115883281767,
+    "gate_false_alarm_normal": 0.010431187443764499,
+    "known_attack_alarm": 0.9901282051282052,
+    "known_attack_flagged_unknown": 0.15164335664335665,
+    "known_macro_f1_classifier": 0.9803172692272435,
+    "known_macro_f1_with_gate": 0.8936826652139811,
+    "latency_s_median_unseen": 10.0,
+    "latency_s_p90_unseen": 10.0
+   }
+  }
+ }
+}
