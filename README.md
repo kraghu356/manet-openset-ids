@@ -38,6 +38,10 @@ previous versions; the paper uses `dataset3` only.
 | `analysis/baseline_checks.py` | RPL convergence, hyperparameter and sign checks; paired run-clustered bootstrap of k-NN + nu against Mahalanobis; writes `results/baseline_checks.json` |
 | `analysis/recalibration.py` | Recalibration of the frozen detectors with local normal traffic in the shifted environment (Table 13); writes `results/recalibration.json` |
 | `analysis/knn_ablation.py` | Ablation of k-NN + nu: k, feature groups, invariant term (Table 15); writes `results/knn_ablation.json` |
+| `analysis/row_ledger.py` | Run-by-run ledger from raw rows to evaluated node sequences; writes `results/row_ledger.csv` |
+| `analysis/ijies_checks.py` | Every-node evaluation, online classifier-plus-gate with time to alarm, per-feature reconstruction test, training seeds, node-level scores and checkpoints |
+| `analysis/intensity_campaign.py`, `analysis/intensity_eval.py` | Attack-intensity campaign (17 runs released as `results/intensity_runs.csv.gz`) and frozen-detector results |
+| `results/node_scores.csv.gz`, `results/checkpoints/` | Node-level scores of every non-neural detector and the autoencoder for every fold and held-out attack; autoencoder checkpoints per fold and recurrent-classifier checkpoints for fold 1 |
 | `analysis/rf_latency.py` | Forest scoring time, hard-vote loop against the library's vectorised path; writes `results/rf_latency.json` |
 | `analysis/make_manifest.py` | Writes `MANIFEST.md`: command, inputs and SHA-256 checksums for every table and figure |
 | `analysis/check_paper_tables.py` | Confirms that every generated table row appears unchanged in the manuscript source |
@@ -78,7 +82,10 @@ generator.
 | Table 13 (recalibration in the shifted environment) | `analysis/make_fixed_tables.py` | `results/recalibration.json` |
 | Table 14 (open-set baselines, fusion rule) | `analysis/openset_baselines.py` | `results/openset_baselines.json`; RPL checks and paired bootstrap in `results/baseline_checks.json` |
 | Table 15 (ablation of k-NN + nu) | `analysis/make_fixed_tables.py` | `results/knn_ablation.json` |
-| Table 16 (computational cost) | `analysis/make_tables.py` | `results/complexity.json`, `results/rf_latency.json` |
+| Table 16 (every node), Table 17 (online classifier-plus-gate) | `analysis/ijies_checks.py`, `analysis/make_ijies_tables.py` | `results/ijies_allnodes.json`, `results/ijies_gate.json` |
+| Table 18 (attack intensity) | `analysis/intensity_eval.py`, `analysis/make_ijies_tables.py` | `results/intensity.json` |
+| Dilution test, training seeds (text of Sections 6.5 and 6.14) | `analysis/ijies_checks.py` | `results/ijies_dilution.json`, `results/ijies_seeds.json` |
+| Table 19 (computational cost) | `analysis/make_tables.py` | `results/complexity.json`, `results/rf_latency.json` |
 | Fig. 1 | `analysis/make_figures.py` | fold definition in `analysis/openset_eval.py` |
 | Fig. 2, Fig. 3 | `analysis/make_figures.py` | `results/openset_results.json` |
 | Fig. 4 | `analysis/make_figures.py` | `results/nu_robustness.csv` |

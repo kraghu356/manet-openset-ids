@@ -21,9 +21,16 @@ ITEMS = [
      ["results/dataset3.csv.gz"], ["results/openset_baselines.json", "results/baseline_checks.json"]),
     ("Table 15 (ablation of k-NN + nu)", "python3 analysis/knn_ablation.py && python3 analysis/make_fixed_tables.py",
      ["results/dataset3.csv.gz"], ["results/knn_ablation.json"]),
+    ("Table 16 (every node), Table 17 (online classifier-plus-gate), dilution and training-seed checks in the text",
+     "python3 analysis/ijies_checks.py allnodes && python3 analysis/ijies_checks.py gate && python3 analysis/ijies_checks.py dilution && python3 analysis/ijies_checks.py seeds && python3 analysis/make_ijies_tables.py",
+     ["results/dataset3.csv.gz"], ["results/ijies_allnodes.json", "results/ijies_gate.json", "results/ijies_dilution.json", "results/ijies_seeds.json"]),
+    ("Table 18 (attack intensity)", "python3 analysis/intensity_eval.py runs_intensity && python3 analysis/make_ijies_tables.py",
+     ["results/dataset3.csv.gz", "results/intensity_runs.csv.gz"], ["results/intensity.json"]),
+    ("Row ledger (Section 4); node-level scores and checkpoints", "python3 analysis/row_ledger.py && python3 analysis/ijies_checks.py dump",
+     ["results/dataset3.csv.gz"], ["results/row_ledger.csv", "results/node_scores.csv.gz"]),
     ("Fig. 4 and stress-test text (nu alone)", "python3 analysis/nu_robustness_report.py --fixed runs_nu_fix --honest runs_nu && python3 analysis/make_figures.py",
      ["results/stress_runs.csv.gz"], ["results/nu_robustness.csv"]),
-    ("Table 16 (computational cost) and forest timing note", "python3 analysis/complexity.py && python3 analysis/rf_latency.py && python3 analysis/make_tables.py",
+    ("Table 19 (computational cost) and forest timing note", "python3 analysis/complexity.py && python3 analysis/rf_latency.py && python3 analysis/make_tables.py",
      ["results/dataset3.csv.gz"], ["results/complexity.json", "results/rf_latency.json"]),
 ]
 
