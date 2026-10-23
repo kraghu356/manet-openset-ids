@@ -10,9 +10,12 @@ Amruth V (ORCID 0009-0005-6346-0201) and Devaraj Verma C (ORCID
 0000-0002-1504-4263), Department of Computer Science and Engineering, JAIN
 (Deemed-to-be University), Bengaluru. Correspondence: amruthv020@gmail.com
 
-The version that produced every number in the submitted manuscript is commit
-`7b7a41c` on branch `revision-openset-eval` (the four-fold results were first
-fixed at `ec4f0aa`; later commits add the frozen-detector evaluation).
+**Manuscript version.** Every number in the submitted manuscript comes from commit
+[`e26b148`](https://github.com/kraghu356/manet-openset-ids/tree/e26b14816f9a0d804bac170def1285e6cdd62cf5)
+on branch `revision-openset-eval` (full hash e26b14816f9a0d804bac170def1285e6cdd62cf5).
+`MANIFEST.md` at that commit lists the command, inputs and SHA-256 checksums for
+every table and figure. Earlier titles and the older `dataset2` belong to
+previous versions; the paper uses `dataset3` only.
 
 ## Contents
 
