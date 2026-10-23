@@ -30,6 +30,11 @@ fixed at `ec4f0aa`; later commits add the frozen-detector evaluation).
 | `analysis/independent_campaign.py` | Regenerates the independent campaign |
 | `analysis/fixed_detector_eval.py` | Frozen detectors (fitted once on seeds 1-16) on the independent campaign and the stress runs, and operating points at four thresholds; writes `results/fixed_detector.json` |
 | `analysis/make_fixed_tables.py` | Tables 9-11 from `results/fixed_detector.json` |
+| `results/stress_runs.csv.gz` | Wormhole stress runs (134 runs, 15 conditions; corrected and honest-node campaigns); unpack with `analysis/stress_runs_io.py unpack` |
+| `analysis/openset_baselines.py` | Mahalanobis and reciprocal-point baselines and the fusion ablation (Table 13); writes `results/openset_baselines.json` |
+| `analysis/rf_latency.py` | Forest scoring time, hard-vote loop against the library's vectorised path; writes `results/rf_latency.json` |
+| `analysis/make_manifest.py` | Writes `MANIFEST.md`: command, inputs and SHA-256 checksums for every table and figure |
+| `analysis/check_paper_tables.py` | Confirms that every generated table row appears unchanged in the manuscript source |
 | `analysis/complexity.py` | Model size and per-node latency; writes `results/complexity.json` |
 | `analysis/nu_robustness.py`, `analysis/nu_robustness_report.py` | Stress test of the unheard-neighbour count; writes `results/nu_robustness.csv` |
 | `analysis/make_tables.py`, `analysis/make_figures.py` | Every table body and figure in the paper, from the result files only |
@@ -63,8 +68,10 @@ generator.
 |---|---|---|
 | Table 3, Table 4, Table 5, Table 6 | `analysis/make_tables.py` | `results/openset_results.json` |
 | Table 7, Table 8 (fold-level, PR-AUC, onboard-only, bootstrap) | `analysis/make_tables.py` | `results/extra_metrics.json` |
-| Table 9 (operating points), Table 10 (full-detector stress), Table 11 (independent campaign) | `analysis/make_fixed_tables.py` | `results/fixed_detector.json` |
-| Table 12 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
+| Table 9 (operating points), Tables 10-11 (full-detector stress, with Wilson intervals), Table 12 (independent campaign) | `analysis/make_fixed_tables.py` | `results/fixed_detector.json` |
+| Table 13 (open-set baselines, fusion rule) | `results/stress_runs.csv.gz` | Wormhole stress runs (134 runs, 15 conditions; corrected and honest-node campaigns); unpack with `analysis/stress_runs_io.py unpack` |
+| `analysis/openset_baselines.py` | `results/openset_baselines.json` |
+| Table 14 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
 | Fig. 1 | `analysis/make_figures.py` | fold definition in `analysis/openset_eval.py` |
 | Fig. 2, Fig. 3 | `analysis/make_figures.py` | `results/openset_results.json` |
 | Fig. 4 | `analysis/make_figures.py` | `results/nu_robustness.csv` |

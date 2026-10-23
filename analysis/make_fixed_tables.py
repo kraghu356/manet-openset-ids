@@ -38,13 +38,24 @@ NAMES = {"baseline": "Baseline", "shadow_2dB": "Shadowing 2 dB", "shadow_4dB": "
 if R.get("stress"):
     rows = []
     for c, v in R["stress"].items():
-        rows.append(" & ".join([NAMES[c], str(v["knn_nu"]["n_pos"])] +
+        rows.append(" & ".join([NAMES[c], str(v["runs"]["endpoint_runs"]), str(v["knn_nu"]["n_pos"])] +
                                [f"{f3(v[k]['auroc'])} / {f2(v[k]['p95']['fpr'])}" for k, _ in M]) + " \\\\")
     save("fixed_stress.tex", rows)
+    ci = lambda d: f"{d['tpr']:.2f} [{d['tpr_ci'][0]:.2f}, {d['tpr_ci'][1]:.2f}]"
+    cf = lambda d: f"{d['fpr']:.3f} [{d['fpr_ci'][0]:.3f}, {d['fpr_ci'][1]:.3f}]"
+    rows = []
+    for c in ["baseline", "shadow_6dB", "speed_10_20", "large_200n", "heard_memory_10s", "relay_wormhole"]:
+        v = R["stress"].get(c)
+        if not v or "tpr_ci" not in v["knn_nu"]["p95"]:
+            continue
+        rows.append(" & ".join([NAMES[c], str(v["knn_nu"]["n_pos"]), str(v["knn_nu"]["n_neg"]),
+                                ci(v["knn_nu"]["p95"]), cf(v["knn_nu"]["p95"]),
+                                ci(v["hybrid"]["p95"]), cf(v["hybrid"]["p95"])]) + " \\\\")
+    save("fixed_stress_ci.tex", rows)
 
 if R.get("independent"):
     rows = []
-    for cond, lab in [("same_env", "Same settings"), ("shift_env", "Shifted channel and speed")]:
+    for cond, lab in [("same_env", "Same"), ("shift_env", "Shifted")]:
         if cond not in R["independent"]:
             continue
         v = R["independent"][cond]

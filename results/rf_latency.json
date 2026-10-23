@@ -1,0 +1,10 @@
+{
+ "trees_300": {
+  "hard_vote_loop_ms": 33.21534176499881,
+  "predict_proba_ms": 19.965187000007063
+ },
+ "trees_50": {
+  "hard_vote_loop_ms": 5.526260880005793,
+  "predict_proba_ms": 4.123503185001027
+ }
+}
