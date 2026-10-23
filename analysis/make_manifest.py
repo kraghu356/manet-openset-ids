@@ -15,11 +15,15 @@ ITEMS = [
     ("Table 9 (operating points), Tables 10-11 (frozen detectors under stress, Wilson intervals), Table 12 (independent campaign)",
      "python3 analysis/fixed_detector_eval.py --indep runs_indep --stress-fix runs_nu_fix --stress-honest runs_nu && python3 analysis/make_fixed_tables.py",
      ["results/dataset3.csv.gz", "results/independent_runs.csv.gz", "results/stress_runs.csv.gz"], ["results/fixed_detector.json"]),
-    ("Table 13 (open-set baselines and fusion ablation)", "python3 analysis/openset_baselines.py",
-     ["results/dataset3.csv.gz"], ["results/openset_baselines.json"]),
+    ("Table 13 (recalibration in the shifted environment)", "python3 analysis/recalibration.py runs_indep && python3 analysis/make_fixed_tables.py",
+     ["results/dataset3.csv.gz", "results/independent_runs.csv.gz"], ["results/recalibration.json"]),
+    ("Table 14 (open-set baselines and fusion rule); RPL checks and paired bootstrap in the text", "python3 analysis/openset_baselines.py && python3 analysis/baseline_checks.py",
+     ["results/dataset3.csv.gz"], ["results/openset_baselines.json", "results/baseline_checks.json"]),
+    ("Table 15 (ablation of k-NN + nu)", "python3 analysis/knn_ablation.py && python3 analysis/make_fixed_tables.py",
+     ["results/dataset3.csv.gz"], ["results/knn_ablation.json"]),
     ("Fig. 4 and stress-test text (nu alone)", "python3 analysis/nu_robustness_report.py --fixed runs_nu_fix --honest runs_nu && python3 analysis/make_figures.py",
      ["results/stress_runs.csv.gz"], ["results/nu_robustness.csv"]),
-    ("Table 14 (computational cost) and forest timing note", "python3 analysis/complexity.py && python3 analysis/rf_latency.py && python3 analysis/make_tables.py",
+    ("Table 16 (computational cost) and forest timing note", "python3 analysis/complexity.py && python3 analysis/rf_latency.py && python3 analysis/make_tables.py",
      ["results/dataset3.csv.gz"], ["results/complexity.json", "results/rf_latency.json"]),
 ]
 

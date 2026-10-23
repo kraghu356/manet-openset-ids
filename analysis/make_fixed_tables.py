@@ -68,3 +68,29 @@ if R.get("independent"):
                                     f2(sum(v[h][k]["p99"]["tpr"] for h in A) / 5),
                                     f3(max(v[h][k]["p99"]["fpr"] for h in A))]) + " \\\\")
     save("fixed_independent.tex", rows)
+
+# recalibration table (results/recalibration.json)
+_rp = os.path.join(HERE, "..", "results", "recalibration.json")
+if os.path.exists(_rp):
+    RC = json.load(open(_rp)); rows = []
+    for key, lab in M:
+        for mode, ml in [("frozen", "frozen"), ("recalibrated", "recalibrated")]:
+            v = RC[mode]["summary"][key]
+            rows.append(" & ".join([lab if mode == "frozen" else "", ml, f3(v["mean_auroc"])] +
+                                   [x for q in ["p95", "p99"] for x in (f2(v[q]["mean_tpr"]), f3(v[q]["max_fpr"]), f"{v[q]['mean_false_alerts_per_run']:.1f}")]) + " \\\\")
+    save("recalibration.tex", rows)
+
+# ablation table (results/knn_ablation.json)
+_ap = os.path.join(HERE, "..", "results", "knn_ablation.json")
+if os.path.exists(_ap):
+    AB = json.load(open(_ap)); rows = []
+    row = lambda lab, v: " & ".join([lab] + [f3(v[h]["auroc"]) for h in A] + [f3(v["mean_auroc"]), f2(v["mean_tpr"]), f2(v["max_fpr"])]) + " \\\\"
+    for k in ["1", "3", "5", "10", "20"]:
+        rows.append(row(f"$k = {k}$" + (" (paper)" if k == "5" else ""), AB["k"][k]))
+    rows.append("\\hline")
+    for g in AB["groups"]:
+        rows.append(row("without " + g.replace("nu as a feature", "$\\nu$ as an input"), AB["groups"][g]))
+    rows.append("\\hline")
+    rows.append(row("without the $\\nu$ term (distance rank only)", AB["override"]["none"]))
+    rows.append(row("$\\nu$ term with the two-window rule", AB["override"]["nu2w"]))
+    save("ablation_knn_nu.tex", rows)

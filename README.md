@@ -29,12 +29,15 @@ previous versions; the paper uses `dataset3` only.
 | `analysis/build_dataset3.py` | Builds dataset3 from dataset2 and regenerated wormhole runs |
 | `analysis/openset_eval.py` | Closed-set and leave-one-attack-out evaluation; writes `results/openset_results.json` |
 | `analysis/extra_metrics.py` | PR-AUC, run-clustered bootstrap intervals, no-speed ablation; writes `results/extra_metrics.json` |
-| `results/independent_runs.csv.gz` | Independent test campaign: 42 runs (24 at the paper's settings, seeds 101-104; 18 with 2 dB shadowing and speeds 2-8 m/s, seeds 201-203), 121,800 rows; never used to choose any method or threshold |
+| `results/independent_runs.csv.gz` | Independent test campaign: 42 runs (24 at the paper's settings, seeds 101-104; 18 with 2 dB shadowing and speeds 2-8 m/s, seeds 201-203), 121,800 rows (127,600 with the calibration runs), never used to choose any method or threshold; plus 2 normal calibration runs in the shifted environment (condition `shift_cal`, seeds 204-205, 5,800 rows) used only by `analysis/recalibration.py` |
 | `analysis/independent_campaign.py` | Regenerates the independent campaign |
 | `analysis/fixed_detector_eval.py` | Frozen detectors (fitted once on seeds 1-16) on the independent campaign and the stress runs, and operating points at four thresholds; writes `results/fixed_detector.json` |
-| `analysis/make_fixed_tables.py` | Tables 9-11 from `results/fixed_detector.json` |
+| `analysis/make_fixed_tables.py` | Tables 9-13 and 15 from `results/fixed_detector.json`, `results/recalibration.json`, `results/knn_ablation.json` |
 | `results/stress_runs.csv.gz` | Wormhole stress runs (134 runs, 15 conditions; corrected and honest-node campaigns); unpack with `analysis/stress_runs_io.py unpack` |
-| `analysis/openset_baselines.py` | Mahalanobis and reciprocal-point baselines and the fusion ablation (Table 13); writes `results/openset_baselines.json` |
+| `analysis/openset_baselines.py` | Mahalanobis and reciprocal-point baselines and the fusion ablation (Table 14); writes `results/openset_baselines.json` |
+| `analysis/baseline_checks.py` | RPL convergence, hyperparameter and sign checks; paired run-clustered bootstrap of k-NN + nu against Mahalanobis; writes `results/baseline_checks.json` |
+| `analysis/recalibration.py` | Recalibration of the frozen detectors with local normal traffic in the shifted environment (Table 13); writes `results/recalibration.json` |
+| `analysis/knn_ablation.py` | Ablation of k-NN + nu: k, feature groups, invariant term (Table 15); writes `results/knn_ablation.json` |
 | `analysis/rf_latency.py` | Forest scoring time, hard-vote loop against the library's vectorised path; writes `results/rf_latency.json` |
 | `analysis/make_manifest.py` | Writes `MANIFEST.md`: command, inputs and SHA-256 checksums for every table and figure |
 | `analysis/check_paper_tables.py` | Confirms that every generated table row appears unchanged in the manuscript source |
@@ -72,9 +75,10 @@ generator.
 | Table 3, Table 4, Table 5, Table 6 | `analysis/make_tables.py` | `results/openset_results.json` |
 | Table 7, Table 8 (fold-level, PR-AUC, onboard-only, bootstrap) | `analysis/make_tables.py` | `results/extra_metrics.json` |
 | Table 9 (operating points), Tables 10-11 (full-detector stress, with Wilson intervals), Table 12 (independent campaign) | `analysis/make_fixed_tables.py` | `results/fixed_detector.json` |
-| Table 13 (open-set baselines, fusion rule) | `results/stress_runs.csv.gz` | Wormhole stress runs (134 runs, 15 conditions; corrected and honest-node campaigns); unpack with `analysis/stress_runs_io.py unpack` |
-| `analysis/openset_baselines.py` | `results/openset_baselines.json` |
-| Table 14 | `analysis/make_tables.py` | `results/complexity.json`, `results/openset_results.json` |
+| Table 13 (recalibration in the shifted environment) | `analysis/make_fixed_tables.py` | `results/recalibration.json` |
+| Table 14 (open-set baselines, fusion rule) | `analysis/openset_baselines.py` | `results/openset_baselines.json`; RPL checks and paired bootstrap in `results/baseline_checks.json` |
+| Table 15 (ablation of k-NN + nu) | `analysis/make_fixed_tables.py` | `results/knn_ablation.json` |
+| Table 16 (computational cost) | `analysis/make_tables.py` | `results/complexity.json`, `results/rf_latency.json` |
 | Fig. 1 | `analysis/make_figures.py` | fold definition in `analysis/openset_eval.py` |
 | Fig. 2, Fig. 3 | `analysis/make_figures.py` | `results/openset_results.json` |
 | Fig. 4 | `analysis/make_figures.py` | `results/nu_robustness.csv` |
